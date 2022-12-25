@@ -1,0 +1,234 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+ul.navigation {
+    span.svg {
+        width: 18px;
+        height: 18px;
+        margin-right: 6px;
+        position: relative;
+        svg {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+.label_year {
+    display: inline-block;
+    padding: 0px 10px;
+    border-radius: 3px;
+    background: #2fb344 !important;
+    border: 1px solid #2fb344;
+    margin: 0px;
+    font-size: 13px;
+    color: #fff;
+    line-height: 24px;
+    height: 28px;
+}
+
+.no-drop {
+    cursor: no-drop;
+}
+
+.label_year.pending {
+    background: #7c0b0b !important;
+    border: 1px solid #7c0b0b;
+    color: #fff;
+}
+
+.label_year.public {
+    background: #2fb344 !important;
+    border: 1px solid #2fb344;
+}
+
+.label_year.private {
+    background: #000 !important;
+    border: 1px solid #000;
+}
+
+.domain_name {
+    display: inline-block;
+    padding: 0px 10px;
+    border-radius: 3px;
+    background: #7c0b0b !important;
+    border: 1px solid #7c0b0b;
+    margin: 0px;
+    font-size: 13px;
+    color: #fff;
+    line-height: 24px;
+    height: 28px;
+}
+
+table#table_contracts tr,
+table#table_contracts td {
+    cursor: pointer !important;
+}
+
+.icon-svg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-svg svg {
+    display: block;
+    position: relative;
+    width: 20px;
+    height: 20px;
+}
+
+.icon-svg svg path {
+    fill: #000;
+}
+
+.icon-svg .svg.active path {
+    fill: #2fb344;
+}
+
+.action-show-all .svg {
+    margin-right: 5px;
+}
+
+.btn-show-search {
+    width: 100%;
+}
+
+.contract-code,
+.title-name {
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.5rem;
+    margin: 0;
+    color: #333333;
+}
+
+.btn-search {
+    overflow: hidden;
+    border-radius: 4px;
+}
+
+.btn-language {
+    padding: 0.4rem 0rem;
+    margin: 0px;
+}
+
+h3.title-name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 150px;
+    text-transform: capitalize;
+}
+.split-w150 {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 150px;
+    display: block;
+}
+.text-red{
+    color: red;
+}
+.border-ec-dashed {
+    border: 1px dashed #ccc !important;
+}
+
+.media {
+    display: flex;
+    align-items: flex-start;
+}
+
+.form-control-file {
+    width: 100%;
+    display: block;
+}
+
+.btn-ec-regular {
+    color: #212529;
+    background-color: #FFFFFF;
+    border-color: #595959;
+    color: #595959;
+    cursor: pointer;
+}
+
+.c-form__fileUploadThumbnails {
+    margin-bottom: 10px;
+    display: none;
+}
+
+.progress {
+    display: flex;
+    height: 1rem;
+    overflow: hidden;
+    font-size: 0.75rem;
+    background-color: #e9ecef;
+    border-radius: 0.25rem;
+}
+
+.progress-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #437ec4;
+    transition: width 0.6s ease;
+}
+
+.progress-bar-striped {
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+    background-size: 1rem 1rem;
+}
+
+.progress-bar-animated {
+    -webkit-animation: progress-bar-stripes 1s linear infinite;
+    animation: progress-bar-stripes 1s linear infinite;
+}
+
+.c-form__fileUploadThumbnail {
+    display: inline-block;
+    width: 170px;
+    height: 170px;
+    background-color: #f5f6f8;
+    background-image: url(../../img/moc.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    cursor: pointer;
+    position: relative;
+}
+
+#thumb div {
+    float: left;
+    margin: 4px;
+}
+
+.c-form__fileUploadThumbnail .delete-image {
+    font-family: FontAwesome;
+    font-size: 18px;
+    line-height: 1;
+    color: #54687A;
+    padding: 5px;
+    background: #fff;
+    border-radius: 3px;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+}
+
+.c-form__fileUploadThumbnail::before {
+    display: block;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background: transparent;
+}
+.line-height-1{
+    line-height: 1;
+}
