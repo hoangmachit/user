@@ -165,7 +165,7 @@ h3.title-name {
 
 .btn-ec-regular {
   color: #212529;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border-color: #595959;
   color: #595959;
   cursor: pointer;
@@ -238,7 +238,7 @@ h3.title-name {
   font-family: FontAwesome;
   font-size: 18px;
   line-height: 1;
-  color: #54687A;
+  color: #54687a;
   padding: 5px;
   background: #fff;
   border-radius: 3px;
@@ -257,5 +257,35 @@ h3.title-name {
 
 .line-height-1 {
   line-height: 1;
+}
+
+/**  Paginate **/
+.render-paginate {
+  padding: 1rem 0px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.render-paginate nav > div:nth-child(1) {
+  display: none;
+}
+
+.render-paginate svg {
+  width: 20px;
+  height: 20px;
+  position: relative;
+  top: -2px;
+}
+
+.render-paginate a {
+  text-decoration: none;
+  cursor: currentColor;
 }
 /*# sourceMappingURL=base.css.map */

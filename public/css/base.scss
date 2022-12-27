@@ -131,7 +131,7 @@ h3.title-name {
     width: 150px;
     display: block;
 }
-.text-red{
+.text-red {
     color: red;
 }
 .border-ec-dashed {
@@ -150,7 +150,7 @@ h3.title-name {
 
 .btn-ec-regular {
     color: #212529;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     border-color: #595959;
     color: #595959;
     cursor: pointer;
@@ -182,7 +182,16 @@ h3.title-name {
 }
 
 .progress-bar-striped {
-    background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+    background-image: linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.15) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0.15) 75%,
+        transparent 75%,
+        transparent
+    );
     background-size: 1rem 1rem;
 }
 
@@ -213,7 +222,7 @@ h3.title-name {
     font-family: FontAwesome;
     font-size: 18px;
     line-height: 1;
-    color: #54687A;
+    color: #54687a;
     padding: 5px;
     background: #fff;
     border-radius: 3px;
@@ -229,6 +238,26 @@ h3.title-name {
     height: 100%;
     background: transparent;
 }
-.line-height-1{
+.line-height-1 {
     line-height: 1;
+}
+/**  Paginate **/
+.render-paginate {
+    padding: 1rem 0px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    nav > div:nth-child(1) {
+        display: none;
+    }
+    svg {
+        width: 20px;
+        height: 20px;
+        position: relative;
+        top: -2px;
+    }
+    a {
+        text-decoration: none;
+        cursor: currentColor;
+    }
 }

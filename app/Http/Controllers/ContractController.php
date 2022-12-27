@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Status;
+use App\Http\Common\Constant;
+use App\Models\Contracts;
+use App\Models\Domains;
+use App\Models\Packages;
+use Validator;
 
 class ContractController extends Controller
 {
@@ -11,19 +17,47 @@ class ContractController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $contracts = Contracts::with('domains','customers')->paginate(Constant::PAGINATE);
+        return view(
+            'admin.contract.index',
+            [
+                'contracts' => $contracts
+            ]
+        );
     }
-
+    private function _roles()
+    {
+        return [
+            'last_name' => 'required',
+            'first_name' => 'required',
+            'address' => 'required',
+            'birth_day' => 'required',
+            'identity_card' => 'required',
+            'phone' => 'required',
+            'zalo' => 'required',
+            'status_id' => 'required',
+        ];
+    }
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $status    = Status::all();
+        $domains   = Domains::all();
+        $packages  = Packages::all();
+        return view(
+            'admin.contract.create',
+            [
+                'status'       => $status,
+                'domains'      => $domains,
+                'packages'     => $packages
+            ]
+        );
     }
 
     /**

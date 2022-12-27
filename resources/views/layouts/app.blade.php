@@ -22,7 +22,7 @@
         <main class="py-4">
             @guest
             @else
-                @include('layouts.traffice')
+                @yield('traffice')
                 @include('layouts.alert')
             @endguest
             @yield('content')

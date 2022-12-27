@@ -49,16 +49,8 @@ class CustomerController extends Controller
             'address' => 'required',
             'birth_day' => 'required',
             'identity_card' => 'required',
-            'identity_before' => 'required',
-            'identity_after' => 'required',
-            'company_name' => 'required',
-            'company_address' => 'required',
-            'company_tax_code' => 'required',
-            'email' => 'required',
             'phone' => 'required',
             'zalo' => 'required',
-            'fax' => 'required',
-            'note' => 'required',
             'status_id' => 'required',
         ];
     }

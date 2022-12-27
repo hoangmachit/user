@@ -7,11 +7,11 @@
                 <div class="row g-2 align-items-center">
                     <div class="col">
                         <div class="page-pretitle">Tổng quan</div>
-                        <h3 class="page-title">Khách hàng</h3>
+                        <h3 class="page-title">Tạo mới hợp đồng</h3>
                     </div>
                     <div class="col-auto ms-auto d-print-none">
                         <div class="btn-list">
-                            <a href="{{ route('admin.customer.index') }}"
+                            <a href="{{ route('admin.contract.index') }}"
                                 class="btn btn-primary d-none d-sm-inline-block"><svg xmlns="http://www.w3.org/2000/svg"
                                     width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise"
                                     viewBox="0 0 16 16">
@@ -21,7 +21,7 @@
                                         d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
                                 </svg> Quay lại
                             </a>
-                            <a href="{{ route('admin.customer.index') }}" class="btn btn-primary d-sm-none btn-icon">
+                            <a href="{{ route('admin.contract.index') }}" class="btn btn-primary d-sm-none btn-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd"
@@ -37,18 +37,88 @@
         </div>
         <div class="page-customer__talbe">
             <div class="container">
-                <div class="card">
-                    <div class="card-header">Thông tin khách hàng</div>
-                    <form action="{{ route('admin.customer.update', $customer) }}" method="POST" role="form">
-                        @csrf
-                        @method('PUT')
+                <form action="{{ route('admin.contract.store') }}" method="POST" role="form">
+                    @csrf
+                    <div class="card">
+                        <div class="card-header">Thông tin hợp đồng</div>
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <label for="name" class="form-label">Name</label>
+                                    <input type="text" name="name" id="name" class="form-control"
+                                        placeholder="Phil" value="{{ old('name') }}">
+                                    @error('name')
+                                        <small class="text-red">{{ $errors->first('name') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <label for="code" class="form-label">Code</label>
+                                    <input type="text" name="code" id="code" value="{{ old('code') }}"
+                                        class="form-control" placeholder="John">
+                                    @error('code')
+                                        <small class="text-red">{{ $errors->first('code') }}</small>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <label for="signing_date" class="form-label">Ngày kí</label>
+                                    <input type="date" name="signing_date" id="signing_date" class="form-control"
+                                        placeholder="" value="{{ old('signing_date') }}">
+                                    @error('signing_date')
+                                        <small class="text-red">{{ $errors->first('signing_date') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <label for="date_of_delivery" class="form-label">Ngày hoàn thành</label>
+                                    <input type="date" name="date_of_delivery" id="date_of_delivery"
+                                        value="{{ old('date_of_delivery') }}" class="form-control" placeholder="">
+                                    @error('date_of_delivery')
+                                        <small class="text-red">{{ $errors->first('date_of_delivery') }}</small>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mt-4">
+                        <div class="card-header">Thông tin thanh toán</div>
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <label for="payment_1st" class="form-label">Thanh toán đợt 1</label>
+                                    <input type="text" name="payment_1st" id="payment_1st" class="form-control"
+                                        placeholder="1.000.000" value="{{ old('payment_1st') }}">
+                                    <input type="date" name="payment_1st" id="payment_1st" class="form-control mt-2"
+                                        placeholder="Phil" value="{{ old('payment_1st') }}">
+                                    <input type="number" name="payment_2st" id="payment_2st" class="form-control mt-2"
+                                        placeholder="" value="{{ old('payment_2st') }}">
+                                    @error('payment_1st')
+                                        <small class="text-red">{{ $errors->first('payment_1st') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <label for="payment_2st" class="form-label">Thanh toán đợt 2</label>
+                                    <input type="text" name="payment_2st" id="payment_2st" class="form-control"
+                                        placeholder="1.000.000" value="{{ old('payment_2st') }}">
+                                    <input type="date" name="payment_2st" id="payment_2st" class="form-control mt-2"
+                                        placeholder="Phil" value="{{ old('payment_2st') }}">
+                                    <input type="number" name="payment_2st" id="payment_2st" class="form-control mt-2"
+                                        placeholder="" value="{{ old('payment_2st') }}">
+                                    @error('payment_2st')
+                                        <small class="text-red">{{ $errors->first('payment_1st') }}</small>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mt-4">
+                        <div class="card-header">Thông tin khách hàng</div>
                         <div class="card-body">
                             <div class="row mb-3">
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <label for="first_name" class="form-label">Firts Name</label>
                                     <input type="text" name="first_name" id="first_name" class="form-control"
-                                        placeholder="Phil"
-                                        value="{{ old('first_name') ? old('first_name') : $customer->first_name }}">
+                                        placeholder="Phil" value="{{ old('first_name') ? old('first_name') : '' }}">
                                     @error('first_name')
                                         <small class="text-red">{{ $errors->first('first_name') }}</small>
                                     @enderror
@@ -56,8 +126,8 @@
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <label for="last_name" class="form-label">Last Name</label>
                                     <input type="text" name="last_name" id="last_name"
-                                        value="{{ old('last_name') ? old('last_name') : $customer->last_name }}"
-                                        class="form-control" placeholder="John">
+                                        value="{{ old('last_name') ? old('last_name') : '' }}" class="form-control"
+                                        placeholder="John">
                                     @error('last_name')
                                         <small class="text-red">{{ $errors->first('last_name') }}</small>
                                     @enderror
@@ -66,7 +136,7 @@
                             <div class="mb-3">
                                 <label for="address" class="form-label">Address</label>
                                 <input type="text" class="form-control" name="address" id="address" placeholder=""
-                                    value="{{ old('address') ? old('address') : $customer->address }}">
+                                    value="{{ old('address') ? old('address') : '' }}">
                                 @error('address')
                                     <small class="text-red">{{ $errors->first('address') }}</small>
                                 @enderror
@@ -75,8 +145,7 @@
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <label for="birth_day" class="form-label">Birth day</label>
                                     <input type="date" name="birth_day" id="birth_day" class="form-control"
-                                        placeholder=""
-                                        value="{{ old('birth_day') ? old('birth_day') : $customer->birth_day }}">
+                                        placeholder="" value="{{ old('birth_day') ? old('birth_day') : '' }}">
                                     @error('birth_day')
                                         <small class="text-red">{{ $errors->first('birth_day') }}</small>
                                     @enderror
@@ -84,7 +153,7 @@
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <label for="identity_card" class="form-label">CCCD/CMND</label>
                                     <input type="number" name="identity_card" id="identity_card"
-                                        value="{{ old('identity_card') ? old('identity_card') : $customer->identity_card }}"
+                                        value="{{ old('identity_card') ? old('identity_card') : '' }}"
                                         class="form-control" placeholder="">
                                     @error('identity_card')
                                         <small class="text-red">{{ $errors->first('identity_card') }}</small>
@@ -95,13 +164,12 @@
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <label for="email" class="form-label">Email</label>
                                     <input type="email" name="email" id="email" class="form-control"
-                                        placeholder="example@gmail.com"
-                                        value="{{ old('email') ? old('email') : $customer->email }}">
+                                        placeholder="example@gmail.com" value="{{ old('email') ? old('email') : '' }}">
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <label for="phone" class="form-label">Phone</label>
                                     <input type="text" name="phone" id="phone"
-                                        value="{{ old('phone') ? old('phone') : $customer->phone }}" class="form-control"
+                                        value="{{ old('phone') ? old('phone') : '' }}" class="form-control"
                                         placeholder="0909 090 090">
                                     @error('phone')
                                         <small class="text-red">{{ $errors->first('phone') }}</small>
@@ -112,7 +180,7 @@
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <label for="zalo" class="form-label">Zalo</label>
                                     <input type="text" name="zalo" id="zalo" class="form-control"
-                                        placeholder="" value="{{ old('zalo') ? old('zalo') : $customer->zalo }}">
+                                        placeholder="" value="{{ old('zalo') ? old('zalo') : '' }}">
                                     @error('zalo')
                                         <small class="text-red">{{ $errors->first('zalo') }}</small>
                                     @enderror
@@ -120,7 +188,7 @@
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <label for="fax" class="form-label">Fax</label>
                                     <input type="text" name="fax" id="fax"
-                                        value="{{ old('fax') ? old('fax') : $customer->fax }}" class="form-control"
+                                        value="{{ old('fax') ? old('fax') : '' }}" class="form-control"
                                         placeholder="0909 090 090">
                                 </div>
                             </div>
@@ -146,13 +214,13 @@
                                         </div>
                                     </div>
                                     <input type="hidden" name="identity_before" id="photo_identity_before"
-                                        value="{{ $customer->identity_before }}">
+                                        value="">
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-12">
                                     <div class="c-form__fileUploadThumbnails c-form__fileUploadThumbnails_identity_before clearfix ui-sortable classThumb thumbFileImage thumbFileImage_identity_before"
                                         style="display: block">
                                         <div class="c-form__fileUploadThumbnail"
-                                            style="background-image:url('{{ asset('/uploads/designs/' . $customer->identity_before) }}');">
+                                            style="background-image:url('{{ asset('/uploads/designs/') }}');">
                                             <a class="delete-image" data-type="identity_before"><svg
                                                     xmlns="http://www.w3.org/2000/svg" class="icon" width="18"
                                                     height="18" viewBox="0 0 24 24" stroke-width="2"
@@ -190,13 +258,13 @@
                                         </div>
                                     </div>
                                     <input type="hidden" name="identity_after" id="photo_identity_after"
-                                        value="{{ $customer->identity_after }}">
+                                        value="">
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-12">
                                     <div class="c-form__fileUploadThumbnails c-form__fileUploadThumbnails_identity_after clearfix ui-sortable classThumb thumbFileImage thumbFileImage_identity_after"
                                         style="display: block">
                                         <div class="c-form__fileUploadThumbnail"
-                                            style="background-image:url('{{ asset('/uploads/designs/' . $customer->identity_after) }}');">
+                                            style="background-image:url('{{ asset('/uploads/designs/') }}');">
                                             <a class="delete-image" data-type="identity_after"><svg
                                                     xmlns="http://www.w3.org/2000/svg" class="icon" width="18"
                                                     height="18" viewBox="0 0 24 24" stroke-width="2"
@@ -220,89 +288,72 @@
                             <div class="mb-3">
                                 <label for="company_name" class="form-label">Company Name</label>
                                 <input type="text" class="form-control" name="company_name" id="company_name"
-                                    placeholder=""
-                                    value="{{ old('company_name') ? old('company_name') : $customer->company_name }}">
+                                    placeholder="" value="{{ old('company_name') }}">
                             </div>
                             <div class="mb-3">
                                 <label for="company_address" class="form-label">Company Address</label>
                                 <input type="text" class="form-control" name="company_address" id="company_address"
-                                    placeholder=""
-                                    value="{{ old('company_address') ? old('company_address') : $customer->company_address }}">
+                                    placeholder="" value="{{ old('company_address') }}">
                             </div>
                             <div class="mb-3">
                                 <label for="company_tax_code" class="form-label">Company Tax Code</label>
                                 <input type="text" class="form-control" name="company_tax_code" id="company_tax_code"
-                                    placeholder=""
-                                    value="{{ old('company_tax_code') ? old('company_tax_code') : $customer->company_tax_code }}">
-                            </div>
-                            <div class="mb-3">
-                                <label for="status_id" class="form-label">Trạng thái</label>
-                                <select class="form-select form-select-md" name="status_id" id="status_id">
-                                    @foreach ($status as $item)
-                                        <option
-                                            {{ old('status_id') ? 'selected' : ($item->id === $customer->status_id ? 'selected' : '') }}
-                                            value="{{ $item->id }}">{{ $item->name }}</option>
-                                    @endforeach
-                                </select>
+                                    placeholder="" value="{{ old('company_tax_code') }}">
                             </div>
                             <div class="mb-3">
                                 <label for="note" class="form-label">Thông tin thêm</label>
-                                <textarea class="form-control" name="note" id="note" rows="7" placeholder="">{{ old('note') ? old('note') : $customer->note }}</textarea>
+                                <textarea class="form-control" name="note" id="note" rows="7" placeholder="">{{ old('note') }}</textarea>
                             </div>
                         </div>
-                        <div class="card-footer">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <button class="btn btn-danger text-decoration-none btn-delete" type="button">
-                                    <span class="d-flex justify-content-center align-items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            fill="currentColor" class="bi bi-trash me-1" viewBox="0 0 16 16">
-                                            <path
-                                                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                                            <path fill-rule="evenodd"
-                                                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                                        </svg>
-                                        Xóa khách hàng
-                                    </span>
-                                </button>
-                                <div>
-                                    <button class="btn btn-warning text-decoration-none" type="reset">
-                                        <span class="d-flex justify-content-center align-items-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                fill="currentColor" class="bi bi-arrow-clockwise me-1"
-                                                viewBox="0 0 16 16">
-                                                <path fill-rule="evenodd"
-                                                    d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z">
-                                                </path>
-                                                <path
-                                                    d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z">
-                                                </path>
-                                            </svg> Reset
-                                        </span>
-                                    </button>
-                                    <button type="submit" id="submit-design-create" class="btn btn-primary ms-auto">
-                                        <span class="d-flex justify-content-center align-items-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon me-1" width="16"
-                                                height="16" viewBox="0 0 24 24" stroke-width="2"
-                                                stroke="currentColor" fill="none" stroke-linecap="round"
-                                                stroke-linejoin="round">
-                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                <line x1="12" y1="5" x2="12" y2="19">
-                                                </line>
-                                                <line x1="5" y1="12" x2="19" y2="12">
-                                                </line>
-                                            </svg> Chỉnh sửa khách hàng
-                                        </span>
-                                    </button>
+                    </div>
+                    <div class="card mt-4">
+                        <div class="card-header">Thông tin tên miền, thiết kế</div>
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <label for="status_id" class="form-label">Tên miền</label>
+                                    <select class="form-select form-select-md" name="status_id" id="status_id">
+                                        @foreach ($domains as $item)
+                                            <option value="{{ $item->id }}">{{ $item->domain_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="row mt-2">
+                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                            <label for="domain_min" class="form-label">Price Min</label>
+                                            <input type="text" class="form-control" readonly
+                                                value="{{ old('domain_min') }}">
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                            <label for="domain_max" class="form-label">Price Max</label>
+                                            <input type="text" class="form-control" readonly
+                                                value="{{ old('domain_max') }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <label for="status_id" class="form-label">Hosting packages</label>
+                                    <select class="form-select form-select-md" name="status_id" id="status_id">
+                                        @foreach ($packages as $item)
+                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="row mt-2">
+                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                            <label for="hosting_max" class="form-label">Price Min</label>
+                                            <input type="text" class="form-control" readonly
+                                                value="{{ old('hosting_max') }}">
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                            <label for="hosting_haiz" class="form-label">Price Max</label>
+                                            <input type="text" class="form-control" readonly
+                                                value="{{ old('hosting_haiz') }}">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </form>
-                    <form action="{{ route('admin.customer.destroy', $customer) }}" id="form-delete" method="POST"
-                        role="form">
-                        @csrf
-                        @method('DELETE')
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

@@ -7,11 +7,11 @@
                 <div class="row g-2 align-items-center">
                     <div class="col">
                         <div class="page-pretitle">Tổng quan</div>
-                        <h3 class="page-title">Khách hàng</h3>
+                        <h3 class="page-title">Hợp đồng</h3>
                     </div>
                     <div class="col-auto ms-auto d-print-none">
                         <div class="btn-list">
-                            <a href="{{ route('admin.customer.index') }}"
+                            <a href="{{ route('admin.contract.index') }}"
                                 class="btn btn-primary d-none d-sm-inline-block"><svg xmlns="http://www.w3.org/2000/svg"
                                     width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise"
                                     viewBox="0 0 16 16">
@@ -21,7 +21,7 @@
                                         d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
                                 </svg> Quay lại
                             </a>
-                            <a href="{{ route('admin.customer.index') }}" class="btn btn-primary d-sm-none btn-icon">
+                            <a href="{{ route('admin.contract.index') }}" class="btn btn-primary d-sm-none btn-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd"
@@ -37,18 +37,18 @@
         </div>
         <div class="page-customer__talbe">
             <div class="container">
-                <div class="card">
-                    <div class="card-header">Thông tin khách hàng</div>
-                    <form action="{{ route('admin.customer.update', $customer) }}" method="POST" role="form">
-                        @csrf
-                        @method('PUT')
+                <form action="{{ route('admin.contract.update', $customer) }}" method="POST" role="form">
+                    @csrf
+                    @method('PUT')
+                    <div class="card">
+                        <div class="card-header">Thông tin hợp đồng</div>
                         <div class="card-body">
                             <div class="row mb-3">
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    <label for="first_name" class="form-label">Firts Name</label>
-                                    <input type="text" name="first_name" id="first_name" class="form-control"
+                                    <label for="name" class="form-label">Name</label>
+                                    <input type="text" name="name" id="name" class="form-control"
                                         placeholder="Phil"
-                                        value="{{ old('first_name') ? old('first_name') : $customer->first_name }}">
+                                        value="{{ old('name') ? old('name') : $contract->name }}">
                                     @error('first_name')
                                         <small class="text-red">{{ $errors->first('first_name') }}</small>
                                     @enderror
@@ -296,13 +296,14 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
-                    <form action="{{ route('admin.customer.destroy', $customer) }}" id="form-delete" method="POST"
-                        role="form">
-                        @csrf
-                        @method('DELETE')
-                    </form>
-                </div>
+
+                    </div>
+                </form>
+                <form action="{{ route('admin.contract.destroy', $customer) }}" id="form-delete" method="POST"
+                    role="form">
+                    @csrf
+                    @method('DELETE')
+                </form>
             </div>
         </div>
     </div>

@@ -38,7 +38,7 @@
         <div class="page-customer__talbe">
             <div class="container">
                 <div class="card">
-                    <div class="card-header">Thông tin thiết kế</div>
+                    <div class="card-header">Thông tin khách hàng</div>
                     <form action="{{ route('admin.customer.store') }}" method="POST" role="form">
                         @csrf
                         <div class="card-body">
@@ -71,7 +71,7 @@
                             <div class="row mb-3">
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <label for="birth_day" class="form-label">Birth day</label>
-                                    <input type="datetime" name="birth_day" id="birth_day" class="form-control"
+                                    <input type="date" name="birth_day" id="birth_day" class="form-control"
                                         placeholder="" value="{{ old('birth_day') }}">
                                     @error('birth_day')
                                         <small class="text-red">{{ $errors->first('birth_day') }}</small>
@@ -79,7 +79,7 @@
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <label for="identity_card" class="form-label">CCCD/CMND</label>
-                                    <input type="text" name="identity_card" id="identity_card"
+                                    <input type="number" name="identity_card" id="identity_card"
                                         value="{{ old('identity_card') }}" class="form-control" placeholder="">
                                     @error('identity_card')
                                         <small class="text-red">{{ $errors->first('identity_card') }}</small>
@@ -91,9 +91,6 @@
                                     <label for="email" class="form-label">Email</label>
                                     <input type="email" name="email" id="email" class="form-control"
                                         placeholder="example@gmail.com" value="{{ old('email') }}">
-                                    @error('email')
-                                        <small class="text-red">{{ $errors->first('email') }}</small>
-                                    @enderror
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <label for="phone" class="form-label">Phone</label>
@@ -117,9 +114,6 @@
                                     <label for="fax" class="form-label">Fax</label>
                                     <input type="text" name="fax" id="fax" value="{{ old('fax') }}"
                                         class="form-control" placeholder="0909 090 090">
-                                    @error('fax')
-                                        <small class="text-red">{{ $errors->first('fax') }}</small>
-                                    @enderror
                                 </div>
                             </div>
                             <hr class="mt-2 mb-3" />
@@ -188,27 +182,18 @@
                                 <label for="company_name" class="form-label">Company Name</label>
                                 <input type="text" class="form-control" name="company_name" id="company_name"
                                     placeholder="" value="{{ old('company_name') }}">
-                                @error('company_name')
-                                    <small class="text-red">{{ $errors->first('company_name') }}</small>
-                                @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="company_address" class="form-label">Company Address</label>
                                 <input type="text" class="form-control" name="company_address" id="company_address"
                                     placeholder="" value="{{ old('company_address') }}">
-                                @error('company_address')
-                                    <small class="text-red">{{ $errors->first('company_address') }}</small>
-                                @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="company_tax_code" class="form-label">Company Tax Code</label>
                                 <input type="text" class="form-control" name="company_tax_code" id="company_tax_code"
                                     placeholder="" value="{{ old('company_tax_code') }}">
-                                @error('company_tax_code')
-                                    <small class="text-red">{{ $errors->first('company_tax_code') }}</small>
-                                @enderror
                             </div>
-                            <div class="row mb-3">
+                            <div class="mb-3">
                                 <label for="status_id" class="form-label">Trạng thái</label>
                                 <select class="form-select form-select-md" name="status_id" id="status_id">
                                     @foreach ($status as $item)
@@ -244,7 +229,7 @@
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                             <line x1="12" y1="5" x2="12" y2="19"></line>
                                             <line x1="5" y1="12" x2="19" y2="12"></line>
-                                        </svg> Tạo thiết kế
+                                        </svg> Tạo khách hàng
                                     </span>
                                 </button>
                             </div>
