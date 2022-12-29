@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Status;
 use App\Http\Common\Constant;
 use App\Models\Contracts;
+use App\Models\Customers;
 use App\Models\Domains;
 use App\Models\Packages;
 use Validator;
@@ -19,7 +20,7 @@ class ContractController extends Controller
      */
     public function index(Request $request)
     {
-        $contracts = Contracts::with('domains','customers')->paginate(Constant::PAGINATE);
+        $contracts = Contracts::with('domains', 'customers')->paginate(Constant::PAGINATE);
         return view(
             'admin.contract.index',
             [
@@ -30,14 +31,15 @@ class ContractController extends Controller
     private function _roles()
     {
         return [
-            'last_name' => 'required',
-            'first_name' => 'required',
-            'address' => 'required',
-            'birth_day' => 'required',
-            'identity_card' => 'required',
-            'phone' => 'required',
-            'zalo' => 'required',
-            'status_id' => 'required',
+            'name' => 'required',
+            'code' => 'required',
+            'signing_date' => 'required',
+            'date_of_delivery' => 'required',
+            'payment_1st' => 'required',
+            'payment_2st' => 'required',
+            'date_payment_1st' => 'required',
+            'date_payment_2st' => 'required',
+            'status_id'        => 'required'
         ];
     }
     /**
@@ -50,12 +52,14 @@ class ContractController extends Controller
         $status    = Status::all();
         $domains   = Domains::all();
         $packages  = Packages::all();
+        $customers = Customers::all();
         return view(
             'admin.contract.create',
             [
                 'status'       => $status,
                 'domains'      => $domains,
-                'packages'     => $packages
+                'packages'     => $packages,
+                'customers'    => $customers
             ]
         );
     }
@@ -68,7 +72,18 @@ class ContractController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $roles = $this->_roles();
+        $validator = Validator::make($data, $roles);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput($request->all());
+        }
+        $contract = Contracts::create($data);
+        if ($contract) {
+            return redirect()->route('admin.contract.index')->with('_success', __('alert.create.success'));
+        } else {
+            return redirect()->back()->withInput()->with('_success', __('alert.create.errors'));
+        }
     }
 
     /**
@@ -114,5 +129,25 @@ class ContractController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function customer(Customers $customer)
+    {
+        $customer->image_identity_after = asset('/uploads/designs/') . "/" . $customer->identity_after;
+        $customer->image_identity_before = asset('/uploads/designs/') . "/" . $customer->identity_before;
+        return response([
+            'customer' => $customer
+        ], 200);
+    }
+    public function domain(Domains $domain)
+    {
+        return response([
+            'domain' => $domain
+        ], 200);
+    }
+    public function package(Packages $package)
+    {
+        return response([
+            'package' => $package
+        ], 200);
     }
 }

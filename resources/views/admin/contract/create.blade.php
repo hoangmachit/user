@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <div id="page-customer">
-        <div class="page-customer__header mb-3">
+    <div id="page-contract">
+        <div class="page-contract__header mb-3">
             <div class="container">
                 <div class="row g-2 align-items-center">
                     <div class="col">
@@ -35,7 +35,7 @@
                 </div>
             </div>
         </div>
-        <div class="page-customer__talbe">
+        <div class="page-contract__table">
             <div class="container">
                 <form action="{{ route('admin.contract.store') }}" method="POST" role="form">
                     @csrf
@@ -46,7 +46,7 @@
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <label for="name" class="form-label">Name</label>
                                     <input type="text" name="name" id="name" class="form-control"
-                                        placeholder="Phil" value="{{ old('name') }}">
+                                        placeholder="HD" value="{{ old('name') }}">
                                     @error('name')
                                         <small class="text-red">{{ $errors->first('name') }}</small>
                                     @enderror
@@ -54,7 +54,7 @@
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <label for="code" class="form-label">Code</label>
                                     <input type="text" name="code" id="code" value="{{ old('code') }}"
-                                        class="form-control" placeholder="John">
+                                        class="form-control" placeholder="TKW">
                                     @error('code')
                                         <small class="text-red">{{ $errors->first('code') }}</small>
                                     @enderror
@@ -78,6 +78,10 @@
                                     @enderror
                                 </div>
                             </div>
+                            <div class="mb-3">
+                                <label for="note" class="form-label">Ghi chú về hợp đồng</label>
+                                <textarea class="form-control" name="note" id="note" rows="7" placeholder="">{{ old('note') }}</textarea>
+                            </div>
                         </div>
                     </div>
                     <div class="card mt-4">
@@ -88,32 +92,47 @@
                                     <label for="payment_1st" class="form-label">Thanh toán đợt 1</label>
                                     <input type="text" name="payment_1st" id="payment_1st" class="form-control"
                                         placeholder="1.000.000" value="{{ old('payment_1st') }}">
-                                    <input type="date" name="payment_1st" id="payment_1st" class="form-control mt-2"
-                                        placeholder="Phil" value="{{ old('payment_1st') }}">
-                                    <input type="number" name="payment_2st" id="payment_2st" class="form-control mt-2"
-                                        placeholder="" value="{{ old('payment_2st') }}">
                                     @error('payment_1st')
                                         <small class="text-red">{{ $errors->first('payment_1st') }}</small>
+                                    @enderror
+                                    <input type="date" name="date_payment_1st" id="date_payment_1st"
+                                        class="form-control mt-2" placeholder="" value="{{ old('date_payment_1st') }}">
+                                    @error('date_payment_1st')
+                                        <small class="text-red">{{ $errors->first('date_payment_1st') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <label for="payment_2st" class="form-label">Thanh toán đợt 2</label>
                                     <input type="text" name="payment_2st" id="payment_2st" class="form-control"
                                         placeholder="1.000.000" value="{{ old('payment_2st') }}">
-                                    <input type="date" name="payment_2st" id="payment_2st" class="form-control mt-2"
-                                        placeholder="Phil" value="{{ old('payment_2st') }}">
-                                    <input type="number" name="payment_2st" id="payment_2st" class="form-control mt-2"
-                                        placeholder="" value="{{ old('payment_2st') }}">
                                     @error('payment_2st')
                                         <small class="text-red">{{ $errors->first('payment_1st') }}</small>
+                                    @enderror
+                                    <input type="date" name="date_payment_2st" id="date_payment_2st"
+                                        class="form-control mt-2" placeholder="Phil"
+                                        value="{{ old('date_payment_2st') }}">
+                                    @error('date_payment_2st')
+                                        <small class="text-red">{{ $errors->first('date_payment_2st') }}</small>
                                     @enderror
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="card mt-4">
+                    <div class="card mt-4" id="card-customer">
                         <div class="card-header">Thông tin khách hàng</div>
                         <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <label for="address" class="form-label">Choice Customer</label>
+                                    <select class="form-select form-select-md" name="customer_id" id="customer_id">
+                                        <option value="0">No Customer</option>
+                                        @foreach ($customers as $item)
+                                            <option data-href="{{ route('admin.contract.customer', $item) }}"
+                                                value="{{ $item->id }}">{{ $item->full_name() }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                             <div class="row mb-3">
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <label for="first_name" class="form-label">Firts Name</label>
@@ -144,7 +163,7 @@
                             <div class="row mb-3">
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <label for="birth_day" class="form-label">Birth day</label>
-                                    <input type="date" name="birth_day" id="birth_day" class="form-control"
+                                    <input type="datetime" name="birth_day" id="birth_day" class="form-control"
                                         placeholder="" value="{{ old('birth_day') ? old('birth_day') : '' }}">
                                     @error('birth_day')
                                         <small class="text-red">{{ $errors->first('birth_day') }}</small>
@@ -301,7 +320,7 @@
                                     placeholder="" value="{{ old('company_tax_code') }}">
                             </div>
                             <div class="mb-3">
-                                <label for="note" class="form-label">Thông tin thêm</label>
+                                <label for="note" class="form-label">Thông tin thêm khách hàng</label>
                                 <textarea class="form-control" name="note" id="note" rows="7" placeholder="">{{ old('note') }}</textarea>
                             </div>
                         </div>
@@ -310,45 +329,90 @@
                         <div class="card-header">Thông tin tên miền, thiết kế</div>
                         <div class="card-body">
                             <div class="row mb-3">
-                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-6 col-md-6 col-sm-12" id="cardDomain">
                                     <label for="status_id" class="form-label">Tên miền</label>
-                                    <select class="form-select form-select-md" name="status_id" id="status_id">
+                                    <select class="form-select form-select-md" name="domain_id" id="domain_id">
+                                        <option value="0">Choice domain</option>
                                         @foreach ($domains as $item)
-                                            <option value="{{ $item->id }}">{{ $item->domain_name }}</option>
+                                            <option data-href="{{ route('admin.contract.domain', $item) }}"
+                                                value="{{ $item->id }}">{{ $item->domain_name }}</option>
                                         @endforeach
                                     </select>
                                     <div class="row mt-2">
                                         <div class="col-lg-6 col-md-6 col-sm-12">
-                                            <label for="domain_min" class="form-label">Price Min</label>
-                                            <input type="text" class="form-control" readonly
-                                                value="{{ old('domain_min') }}">
+                                            <label for="price_domain_min" class="form-label">Price Min</label>
+                                            <input type="text" class="form-control" id="price_domain_min"
+                                                name="price_domain_min" value="{{ old('price_domain_min') }}">
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-12">
-                                            <label for="domain_max" class="form-label">Price Max</label>
-                                            <input type="text" class="form-control" readonly
-                                                value="{{ old('domain_max') }}">
+                                            <label for="price_domain_max" class="form-label">Price Max</label>
+                                            <input type="text" class="form-control" id="price_domain_max"
+                                                name="price_domain_max" value="{{ old('price_domain_max') }}">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-6 col-md-6 col-sm-12" id="cardPackage">
                                     <label for="status_id" class="form-label">Hosting packages</label>
-                                    <select class="form-select form-select-md" name="status_id" id="status_id">
+                                    <select class="form-select form-select-md" name="package_id" id="package_id">
+                                        <option value="0">Choice package</option>
                                         @foreach ($packages as $item)
-                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                            <option data-href="{{ route('admin.contract.package', $item) }}"
+                                                value="{{ $item->id }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                     <div class="row mt-2">
                                         <div class="col-lg-6 col-md-6 col-sm-12">
-                                            <label for="hosting_max" class="form-label">Price Min</label>
-                                            <input type="text" class="form-control" readonly
-                                                value="{{ old('hosting_max') }}">
+                                            <label for="price_package_min" class="form-label">Price Min</label>
+                                            <input type="text" class="form-control" id="price_package_min"
+                                                name="price_package_min" value="{{ old('price_package_min') }}">
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-12">
-                                            <label for="hosting_haiz" class="form-label">Price Max</label>
-                                            <input type="text" class="form-control" readonly
-                                                value="{{ old('hosting_haiz') }}">
+                                            <label for="price_package_max" class="form-label">Price Max</label>
+                                            <input type="text" class="form-control" id="price_package_max"
+                                                name="price_package_max" value="{{ old('price_package_max') }}">
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mt-4">
+                        <div class="card-footer border-0">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <button class="btn btn-warning text-decoration-none" type="reset">
+                                    <span class="d-flex justify-content-center align-items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-arrow-clockwise me-1" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd"
+                                                d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"></path>
+                                            <path
+                                                d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z">
+                                            </path>
+                                        </svg> Reset
+                                    </span>
+                                </button>
+                                <div class="d-flex justify-conten-end align-items-center">
+                                    <select class="form-select form-select-md me-2" name="status_id" id="status_id">
+                                        @foreach ($status as $item)
+                                            <option {{ old('status_id') == $item->id ? 'selected' : '' }}
+                                                value="{{ $item->id }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <button type="submit" id="submit-contract-create"
+                                        class="btn btn-primary ms-auto w-250">
+                                        <span class="d-flex justify-content-center align-items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon me-1" width="16"
+                                                height="16" viewBox="0 0 24 24" stroke-width="2"
+                                                stroke="currentColor" fill="none" stroke-linecap="round"
+                                                stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                <line x1="12" y1="5" x2="12" y2="19">
+                                                </line>
+                                                <line x1="5" y1="12" x2="19" y2="12">
+                                                </line>
+                                            </svg> Tạo hợp đồng
+                                        </span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -365,6 +429,15 @@
     <script src="{{ asset('/fileupload/jquery.fileupload-process.js') }}"></script>
     <script src="{{ asset('/fileupload/jquery.fileupload-validate.js') }}"></script>
     <script>
+        function resetDomain(cardDomain) {
+            cardDomain.find('input[name="price_domain_min"]').val(0);
+            cardDomain.find('input[name="price_domain_max"]').val(0);
+        }
+
+        function resetPackage(cardPackage) {
+            cardPackage.find('input[name="price_package_min"]').val(0);
+            cardPackage.find('input[name="price_package_max"]').val(0);
+        }
         jQuery(document).ready(function($) {
             $('.click_button').click(function(event) {
                 var type = $(this).data('type');
@@ -429,6 +502,156 @@
                 var thumbnail = $(this).parents('div.c-form__fileUploadThumbnail');
                 $('input#photo_' + type).val("");
                 $(thumbnail).remove();
+            });
+            //  Call API Customer
+            $('select#customer_id').on('change', function(e) {
+                e.preventDefault();
+                let options = $(this).find('option:selected');
+                let href = options.data("href");
+                let cardCustomer = $('#card-customer');
+                $.ajax({
+                    url: href,
+                    type: "GET",
+                    data: "json",
+                    beforeSend: function() {
+
+                    },
+                    success: function({
+                        customer
+                    }) {
+                        console.log('customer', customer);
+                        cardCustomer.find('input[name="first_name"]').val(customer.first_name);
+                        cardCustomer.find('input[name="last_name"]').val(customer.last_name);
+                        cardCustomer.find('input[name="address"]').val(customer.address);
+                        cardCustomer.find('input[name="birth_day"]').val(customer.birth_day);
+                        cardCustomer.find('input[name="identity_card"]').val(customer
+                            .identity_card);
+                        cardCustomer.find('input[name="email"]').val(customer.email);
+                        cardCustomer.find('input[name="phone"]').val(customer.phone);
+                        cardCustomer.find('input[name="zalo"]').val(customer.zalo);
+                        cardCustomer.find('input[name="fax"]').val(customer.fax);
+                        /* Company */
+                        cardCustomer.find('input[name="company_name"]').val(customer
+                            .company_name);
+                        cardCustomer.find('input[name="company_address"]').val(customer
+                            .company_address);
+                        cardCustomer.find('input[name="company_tax_code"]').val(customer
+                            .company_tax_code);
+                        cardCustomer.find('textarea[name="note"]').val(customer.note);
+                        /* Identity Card */
+                        const array_photo = [
+                            'identity_before',
+                            'identity_after'
+                        ];
+                        array_photo.forEach(element => {
+                            let type = element;
+                            console.log('type', type, customer);
+                            let pathImage = "";
+                            let valuePhoto = "";
+                            if (type == 'identity_before') {
+                                pathImage = customer.image_identity_before;
+                                valuePhoto = customer.identity_before;
+                            } else {
+                                pathImage = customer.image_identity_after;
+                                valuePhoto = customer.identity_after;
+                            }
+                            $('.c-form__fileUploadThumbnails_' + type).show();
+                            $('.progress_' + type).hide();
+                            let text = `
+                            <div class="c-form__fileUploadThumbnail" style="background-image:url('${pathImage}');">
+                                <a class="delete-image" data-type="${type}">
+                                <span class="svg">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="18" height="18" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <line x1="4" y1="7" x2="20" y2="7"></line>
+                                            <line x1="10" y1="11" x2="10" y2="17"></line>
+                                            <line x1="14" y1="11" x2="14" y2="17"></line>
+                                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
+                                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
+                                        </svg>  
+                                </span>
+                                </a>
+                            </div>`;
+                            $('.thumbFileImage_' + type).html(text);
+                            $('input#photo_' + type).val(valuePhoto);
+                        });
+
+                    },
+                    complete: function() {
+
+                    },
+                    error: function(error) {
+                        console.error(error);
+                    }
+                });
+            });
+            //  Call API Domain
+            $('select#domain_id').on('change', function(e) {
+                e.preventDefault();
+                let cardDomain = $('#cardDomain');
+                if ($(this).val() == 0) {
+                    resetDomain(cardDomain);
+                    return false;
+                }
+                let options = $(this).find('option:selected');
+                let href = options.data("href");
+                $.ajax({
+                    url: href,
+                    type: "GET",
+                    data: "json",
+                    beforeSend: function() {
+
+                    },
+                    success: function({
+                        domain
+                    }) {
+                        /* Price Min Max */
+                        cardDomain.find('input[name="price_domain_min"]').val(domain
+                            .price_special);
+                        cardDomain.find('input[name="price_domain_max"]').val(domain
+                            .price);
+                    },
+                    complete: function() {
+
+                    },
+                    error: function(error) {
+                        console.error(error);
+                    }
+                });
+            });
+            //  Call API Package
+            $('select#package_id').on('change', function(e) {
+                e.preventDefault();
+                let cardPackage = $('#cardPackage');
+                if ($(this).val() == 0) {
+                    resetPackage(cardPackage);
+                    return false;
+                }
+                let options = $(this).find('option:selected');
+                let href = options.data("href");
+                $.ajax({
+                    url: href,
+                    type: "GET",
+                    data: "json",
+                    beforeSend: function() {
+
+                    },
+                    success: function({
+                        package
+                    }) {
+                        /* Price Min Max */
+                        cardPackage.find('input[name="price_package_min"]').val(package
+                            .price_special);
+                        cardPackage.find('input[name="price_package_max"]').val(package
+                            .price);
+                    },
+                    complete: function() {
+
+                    },
+                    error: function(error) {
+                        console.error(error);
+                    }
+                });
             });
         });
     </script>

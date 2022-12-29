@@ -31,7 +31,7 @@ class Contracts extends Model
         'date_payment_1st',
         'date_payment_2st',
         'note',
-        'status',
+        'status_id',
     ];
     public function designs()
     {
@@ -57,7 +57,8 @@ class Contracts extends Model
     {
         return $this->hasMany(ContractPrices::class, 'contract_id', 'id');
     }
-    public function status(){
+    public function status()
+    {
         return $this->hasOne(Status::class, 'id', 'status_id');
     }
 }

@@ -18,7 +18,7 @@ class CreateCustomersTable extends Migration
             $table->string('last_name',255)->nullable();
             $table->string('first_name',255)->nullable();
             $table->string('address',255)->nullable();
-            $table->string('birth_day',255)->nullable();
+            $table->date('birth_day',255)->nullable();
             $table->string('identity_card',255)->nullable();
             $table->string('identity_before',255)->nullable();
             $table->string('identity_after',255)->nullable();

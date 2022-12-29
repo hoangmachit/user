@@ -39,6 +39,15 @@ Route::group([
     Route::resource('/domain', DomainController::class);
     Route::resource('/design', DesignController::class);
     Route::resource('/contract', ContractController::class);
+    Route::group([
+        'prefix' => 'contract',
+        'as'    => 'contract.',
+        'name'  => 'contract.'
+    ], function () {
+        Route::get('/{customer}/customer', [ContractController::class, 'customer'])->name('customer');
+        Route::get('/{domain}/domain', [ContractController::class, 'domain'])->name('domain');
+        Route::get('/{package}/package', [ContractController::class, 'package'])->name('package');
+    });
     Route::resource('/customer', CustomerController::class);
     Route::resource('/hosting', HostingController::class);
     Route::group([
