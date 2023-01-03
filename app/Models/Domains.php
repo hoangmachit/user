@@ -36,4 +36,7 @@ class Domains extends Model
     public function status(){
         return $this->hasOne(Status::class, 'id', 'status_id');
     }
+    public function duration(){
+        return $this->hasOne(Durations::class, 'id', 'duration_id');
+    }
 }

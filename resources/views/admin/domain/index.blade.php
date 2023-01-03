@@ -66,7 +66,7 @@
                                                     class="production_unit">{{ !empty($item->domain_init) ? $item->domain_init->name : '' }}</span>
                                             </td>
                                             <td>{{ $item->date_payment }}</td>
-                                            <td><span class="label_year">{{ $item->year }} years</span></td>
+                                            <td><span class="label_year">{{ $item->duration->name }}</span></td>
                                             <td><span
                                                     class="label_year {{ !empty($item->status) ? $item->status->class : '' }}">{{ !empty($item->status) ? $item->status->name : '' }}</span>
                                             </td>

@@ -33,6 +33,12 @@ class DomainInitSeeder extends Seeder
                 'origin' => 'inet.vn',
                 'url' => 'https://inet.vn/',
                 'note' => 'INET.VN được nhiều khách hàng tin tưởng lựa chọn',
+            ],
+            [
+                'name' => 'NINA',
+                'origin' => 'nina.vn',
+                'url' => 'https://nina.vn/',
+                'note' => 'NINA VN được nhiều khách hàng tin tưởng lựa chọn',
             ]
         ];
         foreach ($domain_inits as $key => $item) {

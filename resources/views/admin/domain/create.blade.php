@@ -44,7 +44,7 @@
                             <div class="mb-3">
                                 <label for="name" class="form-label">Tên</label>
                                 <input type="text" name="name" id="name" class="form-control"
-                                    placeholder="Your nane" value="{{ old('name') }}">
+                                    placeholder="Your name" value="{{ old('name') }}">
                                 @error('name')
                                     <small class="text-red">{{ $errors->first('name') }}</small>
                                 @enderror

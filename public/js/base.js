@@ -4,3 +4,10 @@ $(".btn-delete").on("click", function (e) {
         $("#form-delete").submit();
     }
 });
+$(window).scroll(function () {
+    if ($(window).scrollTop() > 0) {
+        $(".navbar").addClass("fixed-top");
+    } else {
+        $(".navbar").removeClass("fixed-top");
+    }
+});

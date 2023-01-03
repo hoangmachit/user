@@ -349,7 +349,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
         const contract_id = '{{ $contract->id }}';
-        const PUBLIC_API = 'https://user.local/admin';
+        const PUBLIC_API = '{{ config('app.api') }}';
         const {
             createApp
         } = Vue

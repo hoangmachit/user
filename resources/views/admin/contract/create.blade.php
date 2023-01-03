@@ -127,8 +127,7 @@
                                     <select class="form-select form-select-md" name="customer_id" id="customer_id">
                                         <option value="0">No Customer</option>
                                         @foreach ($customers as $item)
-                                            <option data-href="{{ route('admin.contract.customer', $item) }}"
-                                                value="{{ $item->id }}">{{ $item->full_name() }}</option>
+                                            <option value="{{ $item->id }}">{{ $item->full_name() }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -144,8 +143,7 @@
                                     <select class="form-select form-select-md" name="design_id" id="design_id">
                                         <option value="0">No Design</option>
                                         @foreach ($designs as $item)
-                                            <option data-href="{{ route('admin.contract.design', $item) }}"
-                                                value="{{ $item->id }}">{{ $item->full_name() }}</option>
+                                            <option value="{{ $item->id }}">{{ $item->full_name() }}</option>
                                         @endforeach
                                     </select>
                                 </div>

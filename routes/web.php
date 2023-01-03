@@ -21,10 +21,14 @@ use App\Http\Controllers\SettingController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 
-Auth::routes();
+Auth::routes([
+    'register' => false,
+    'reset' => false,
+    'verify' => false
+]);
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
@@ -61,7 +65,6 @@ Route::group([
     });
     Route::resource('/contract', ContractController::class);
     Route::resource('/customer', CustomerController::class);
-    Route::resource('/hosting', HostingController::class);
     Route::group([
         'prefix' => 'setting',
         'as'    => 'setting.',

@@ -18,7 +18,7 @@ class DomainController extends Controller
      */
     public function index(Request $request)
     {
-        $domains = Domains::with('domain_init', 'status')->orderBy('id', 'desc')->get();
+        $domains = Domains::with('domain_init', 'status', 'duration')->orderBy('id', 'desc')->get();
         return view(
             'admin.domain.index',
             [
