@@ -10,7 +10,17 @@ class ContractDesigns extends Model
     use HasFactory;
     protected $fillable = [
         'contract_id',
-        'design_id'
+        'design_id',
+        'first_name',
+        'last_name',
+        'url',
+        'note',
+        'date_start',
+        'date_finish',
+        'font_family',
+        'url_example',
+        'status_id',
+        'photo',
     ];
     public function designs()
     {

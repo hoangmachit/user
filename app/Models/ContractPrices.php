@@ -16,11 +16,12 @@ class ContractPrices extends Model
      */
     protected $fillable = [
         'contract_id',
-        'price_1st',
-        'price_2st',
-        'price_contract',
-        'price_domain',
-        'price_hosting',
+        'contract_price_1st',
+        'contract_price_2st',
+        'domain_price',
+        'domain_price_special',
+        'package_price',
+        'package_price_special',
         'price_total',
     ];
 

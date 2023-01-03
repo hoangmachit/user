@@ -20,6 +20,8 @@ class CreateContractCustomersTable extends Migration
             $table->string('address',255)->nullable();
             $table->date('birth_day')->nullable();
             $table->string('identity_card',255)->nullable();
+            $table->string('identity_after',255)->nullable();
+            $table->string('identity_before',255)->nullable();
             $table->string('company_name',255)->nullable();
             $table->string('company_address',255)->nullable();
             $table->string('company_tax_code',255)->nullable();

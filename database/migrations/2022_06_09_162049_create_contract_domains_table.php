@@ -15,6 +15,16 @@ class CreateContractDomainsTable extends Migration
     {
         Schema::create('contract_domains', function (Blueprint $table) {
             $table->id();
+            $table->string('name', 255)->nullable();
+            $table->string('domain_name', 255)->nullable();
+            $table->string('address', 255)->nullable();
+            $table->integer('domain_init_id')->default(0);
+            $table->text('note', 1000)->nullable();
+            $table->double('price', 12, 2)->default(0);
+            $table->double('price_special', 12, 2)->default(0);
+            $table->date('date_payment')->nullable();
+            $table->integer('duration_id')->default(1);
+            $table->smallInteger('status_id')->default(1);
             $table->timestamps();
         });
     }

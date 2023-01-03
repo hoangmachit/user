@@ -15,7 +15,7 @@ class ContractHostings extends Model
         'ram',
         'price',
         'price_special',
-        'infomations',
-        'status'
+        'package_infomations',
+        'status_id'
     ];
 }

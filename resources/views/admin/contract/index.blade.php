@@ -68,16 +68,16 @@
                                             <td><span>{{ $item->date_payment_2st }}</span></td>
                                             <td>
                                                 @if (!empty($item->domains))
-                                                    @foreach ($item->domains as $key_dm => $dm)
-                                                        <span class="domain_name">{{ $dm->domains->domain_name }}</span>
+                                                    @foreach ($item->domains as $dm)
+                                                        <span class="domain_name">{{ $dm->domain_name }}</span>
                                                     @endforeach
                                                 @endif
                                             </td>
                                             <td>
                                                 @if (!empty($item->customers))
-                                                    @foreach ($item->customers as $key_ct => $ct)
+                                                    @foreach ($item->customers as $c)
                                                         <span
-                                                            class="domain_name">{{ $ct->last_name . $ct->first_name }}</span>
+                                                            class="domain_name">{{ $c->last_name . $c->first_name }}</span>
                                                     @endforeach
                                                 @endif
                                             </td>

@@ -155,4 +155,11 @@ class DomainController extends Controller
         $domain->delete();
         return redirect()->route('admin.domain.index')->with('_success', __('alert.delete.success'));
     }
+    public function all(Request $request)
+    {
+        $all_domains = Domains::all();
+        return response([
+            'all_domains' => $all_domains
+        ], 200);
+    }
 }

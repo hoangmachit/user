@@ -15,12 +15,13 @@ class CreateContractPricesTable extends Migration
     {
         Schema::create('contract_prices', function (Blueprint $table) {
             $table->id();
-            $table->double('price_1st', 12, 2)->default(0);
-            $table->double('price_2st', 12, 2)->default(0);
-            $table->double('price_contract', 12, 2)->default(0);
-            $table->double('price_domain', 12, 2)->default(0);
-            $table->double('price_hosting', 12, 2)->default(0);
-            $table->double('total_price', 12, 2)->default(0);
+            $table->double('contract_price_1st', 12, 2)->default(0);
+            $table->double('contract_price_2st', 12, 2)->default(0);
+            $table->double('domain_price', 12, 2)->default(0);
+            $table->double('domain_price_special', 12, 2)->default(0);
+            $table->double('package_price', 12, 2)->default(0);
+            $table->double('package_price_special', 12, 2)->default(0);
+            $table->double('price_total', 12, 2)->default(0);
             $table->timestamps();
         });
     }

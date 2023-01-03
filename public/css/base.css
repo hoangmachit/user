@@ -1,7 +1,8 @@
 * {
   margin: 0px;
   padding: 0px;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 ul.navigation span.svg {
@@ -10,6 +11,7 @@ ul.navigation span.svg {
   margin-right: 6px;
   position: relative;
 }
+
 ul.navigation span.svg svg {
   position: absolute;
   left: 0px;
@@ -70,9 +72,15 @@ table#table_contracts td {
 }
 
 .icon-svg {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .icon-svg svg {
@@ -142,8 +150,12 @@ h3.title-name {
 }
 
 .media {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
 }
 
 .form-control-file {
@@ -165,6 +177,8 @@ h3.title-name {
 }
 
 .progress {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   height: 1rem;
   overflow: hidden;
@@ -174,13 +188,21 @@ h3.title-name {
 }
 
 .progress-bar {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   color: #fff;
   text-align: center;
   white-space: nowrap;
   background-color: #437ec4;
+  -webkit-transition: width 0.6s ease;
   transition: width 0.6s ease;
 }
 
@@ -240,19 +262,28 @@ h3.title-name {
 /**  Paginate **/
 .render-paginate {
   padding: 1rem 0px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
 }
+
 .render-paginate nav > div:nth-child(1) {
   display: none;
 }
+
 .render-paginate svg {
   width: 20px;
   height: 20px;
   position: relative;
   top: -2px;
 }
+
 .render-paginate a {
   text-decoration: none;
   cursor: currentColor;
@@ -260,4 +291,9 @@ h3.title-name {
 
 .w-250 {
   width: 250px;
-}/*# sourceMappingURL=base.css.map */
+}
+
+.w-400 {
+  width: 400px;
+}
+/*# sourceMappingURL=base.css.map */

@@ -20,6 +20,6 @@ class Packages extends Model
         'ram',
         'price',
         'price_special',
-        'status'
+        'status_id'
     ];
 }

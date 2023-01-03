@@ -6,10 +6,13 @@ use Illuminate\Database\Seeder;
 use App\Models\Contracts;
 use App\Models\ContractCustomers;
 use App\Models\ContractPrices;
-use App\Models\ContractCancels;
 use App\Models\ContractDesigns;
 use App\Models\ContractDomains;
 use App\Models\ContractHostings;
+use App\Models\Customers;
+use App\Models\Designs;
+use App\Models\Domains;
+use App\Models\Packages;
 use Carbon\Carbon;
 
 class ContractSeeder extends Seeder
@@ -34,28 +37,18 @@ class ContractSeeder extends Seeder
                 'date_payment_2st' => Carbon::now(),
                 'note' => "My Note ComPany Hà Thị Bích Trâm",
                 'status_id' => 1,
-                'customer' => [
-                    'last_name' => 'Hà Thị',
-                    'first_name' => ' Bích Trâm',
-                    'address' => '28/5 Phạm Qúy Thích, Tân Qúy, Tân Phú, TP Hồ Chí Minh',
-                    'birth_day' => Carbon::now(),
-                    'identity_card' => 174910487,
-                    'company_name' => 'SHOP BE TET',
-                    'company_address' => '28/5 Phạm Qúy Thích, Tân Qúy, Tân Phú, TP Hồ Chí Minh',
-                    'company_tax_code' => '10',
-                    'email' => 'hathibichtram0901@gmail.com',
-                    'phone' => '0937925302',
-                    'zalo' => '0937925302',
-                    'fax' => '0937925302',
-                    'note' => 'Ghi chú gì ghi nhanh lên',
-                    'status_id' =>  1,
-                ],
+                'customer_id' => 4,
+                'design_id' => 3,
+                'package_id' => 2,
+                'domain_id' => 2,
                 'prices' => [
-                    'price_1st' => 3500000,
-                    'price_2st' => 7600000,
-                    'price_contract' => 3500000 + 7600000,
-                    'price_domain' => 290000,
-                    'price_hosting' => 13570000,
+                    'contract_price_1st' => 111,
+                    'contract_price_2st' => 111,
+                    'domain_price' => 111,
+                    'domain_price_special' => 111,
+                    'package_price' => 111,
+                    'package_price_special' => 111,
+                    'price_total' => 111,
                 ]
             ],
             [
@@ -70,28 +63,18 @@ class ContractSeeder extends Seeder
                 'date_payment_2st' => Carbon::now(),
                 'note' => "My Note ComPany Mạch Văn Hải",
                 'status_id' => 1,
-                'customer' => [
-                    'last_name' => 'Mạch Văn',
-                    'first_name' => ' Hải',
-                    'address' => '286 Công Hòa, Tân Bình, TP Hồ Chí Minh',
-                    'birth_day' => Carbon::now(),
-                    'identity_card' => 174910487,
-                    'company_name' => 'MANH PHUOC HAI',
-                    'company_address' => '286 Công Hòa, Tân Bình, TP Hồ Chí Minh',
-                    'company_tax_code' => '10',
-                    'email' => 'manhphuochai@gmail.com',
-                    'phone' => '0909160056',
-                    'zalo' => '0909160056',
-                    'fax' => '0909160056',
-                    'note' => 'Ghi chú gì ghi nhanh lên',
-                    'status_id' =>  1,
-                ],
+                'customer_id' => 3,
+                'design_id' => 1,
+                'package_id' => 2,
+                'domain_id' => 2,
                 'prices' => [
-                    'price_1st' => 4200000,
-                    'price_2st' => 3600000,
-                    'price_contract' => 4200000 + 3600000,
-                    'price_domain' => 290000,
-                    'price_hosting' => 4800000,
+                    'contract_price_1st' => 111,
+                    'contract_price_2st' => 111,
+                    'domain_price' => 111,
+                    'domain_price_special' => 111,
+                    'package_price' => 111,
+                    'package_price_special' => 111,
+                    'price_total' => 111,
                 ]
             ],
             [
@@ -106,28 +89,18 @@ class ContractSeeder extends Seeder
                 'date_payment_2st' => Carbon::now(),
                 'note' => "My Note ComPany Phạm Bá Thọ",
                 'status_id' => 1,
-                'customer' => [
-                    'last_name' => 'Phạm Bá',
-                    'first_name' => 'Thọ',
-                    'address' => 'Công Liêm, Nông Cống, Thanh Hóa',
-                    'birth_day' => Carbon::now(),
-                    'identity_card' => 174910487,
-                    'company_name' => 'THO PHAT',
-                    'company_address' => 'Công Liêm, Nông Cống, Thanh Hóa',
-                    'company_tax_code' => '10',
-                    'email' => 'phambatho@gmail.com',
-                    'phone' => '0987465123',
-                    'zalo' => '0987465123',
-                    'fax' => '0987465123',
-                    'note' => 'Ghi chú gì ghi nhanh lên Phạm Bá Thọ',
-                    'status_id' =>  1,
-                ],
+                'customer_id' => 2,
+                'design_id' => 1,
+                'package_id' => 3,
+                'domain_id' => 2,
                 'prices' => [
-                    'price_1st' => 4200000,
-                    'price_2st' => 3600000,
-                    'price_contract' => 4200000 + 3600000,
-                    'price_domain' => 290000,
-                    'price_hosting' => 4800000,
+                    'contract_price_1st' => 111,
+                    'contract_price_2st' => 111,
+                    'domain_price' => 111,
+                    'domain_price_special' => 111,
+                    'package_price' => 111,
+                    'package_price_special' => 111,
+                    'price_total' => 111,
                 ]
             ],
             [
@@ -142,28 +115,18 @@ class ContractSeeder extends Seeder
                 'date_payment_2st' => Carbon::now(),
                 'note' => "My Note ComPany Phạm Bá Thọ",
                 'status_id' => 1,
-                'customer' => [
-                    'last_name' => 'Lê Văn',
-                    'first_name' => ' Long',
-                    'address' => 'Tan Sơn, Tân Phú, TP Hồ Chí Minh',
-                    'birth_day' => Carbon::now(),
-                    'identity_card' => 174910487,
-                    'company_name' => 'MACH GIA GROUP',
-                    'company_address' => 'Tan Sơn, Tân Phú, TP Hồ Chí Minh',
-                    'company_tax_code' => '10',
-                    'email' => 'levanlong@gmail.com',
-                    'phone' => '0123456789',
-                    'zalo' => '0123456789',
-                    'fax' => '0123456789',
-                    'note' => 'Ghi chú gì ghi nhanh lên Lê Văn Long',
-                    'status_id' =>  1,
-                ],
+                'customer_id' => 1,
+                'design_id' => 3,
+                'package_id' => 2,
+                'domain_id' => 2,
                 'prices' => [
-                    'price_1st' => 1200000,
-                    'price_2st' => 3500000,
-                    'price_contract' => 1200000 + 3500000,
-                    'price_domain' => 290000,
-                    'price_hosting' => 4800000,
+                    'contract_price_1st' => 111,
+                    'contract_price_2st' => 111,
+                    'domain_price' => 111,
+                    'domain_price_special' => 111,
+                    'package_price' => 111,
+                    'package_price_special' => 111,
+                    'price_total' => 111,
                 ]
             ]
         ];
@@ -184,32 +147,77 @@ class ContractSeeder extends Seeder
             $contract = Contracts::create($data_contract);
             if (!empty($contract)) {
                 // contract Customer
+                $single_customer = Customers::find($item['customer_id']);
                 $customer = [];
-                $customer = $item['customer'];
                 $customer['contract_id'] = $contract->id;
-                $customer['customer_id'] = $item['id'];
-                $contract_customer = ContractCustomers::create($customer);
-
+                $customer['customer_id'] = $single_customer->id;
+                $customer['last_name'] = $single_customer->last_name;
+                $customer['first_name'] = $single_customer->first_name;
+                $customer['address'] = $single_customer->address;
+                $customer['birth_day'] = $single_customer->birth_day;
+                $customer['identity_card'] = $single_customer->identity_card;
+                $customer['identity_before'] = $single_customer->identity_before;
+                $customer['identity_after'] = $single_customer->identity_after;
+                $customer['company_name'] = $single_customer->company_name;
+                $customer['company_address'] = $single_customer->company_address;
+                $customer['company_tax_code'] = $single_customer->company_tax_code;
+                $customer['email'] = $single_customer->email;
+                $customer['phone'] = $single_customer->phone;
+                $customer['zalo'] = $single_customer->zalo;
+                $customer['fax'] = $single_customer->fax;
+                $customer['note'] = $single_customer->note;
+                $customer['status_id'] = $single_customer->status_id;
+                ContractCustomers::create($customer);
                 // contract Design
-                $contract_design   = ContractDesigns::create([
+                $single_design = Designs::find($item['design_id']);
+                ContractDesigns::create([
                     'contract_id' => $contract->id,
-                    'design_id'   => $item['id']
+                    'design_id'   => $single_design->id,
+                    'first_name' => $single_design->first_name,
+                    'last_name' => $single_design->last_name,
+                    'url' => $single_design->url,
+                    'note' => $single_design->note,
+                    'date_start' => $single_design->date_start,
+                    'date_finish' => $single_design->date_finish,
+                    'font_family' => $single_design->font_family,
+                    'url_example' => $single_design->url_example,
+                    'status_id' => $single_design->status_id,
+                    'photo' => $single_design->photo,
                 ]);
                 // contract Domain
-                $contract_domain   = ContractDomains::create([
+                $single_domain = Domains::find($item['domain_id']);
+                ContractDomains::create([
                     'contract_id' => $contract->id,
-                    'domain_id'   => $item['id']
+                    'domain_id'   => $single_domain->id,
+                    'name'   => $single_domain->name,
+                    'domain_name'   => $single_domain->domain_name,
+                    'address'   => $single_domain->address,
+                    'domain_init_id'   => $single_domain->domain_init_id,
+                    'note'   => $single_domain->note,
+                    'price'   => $single_domain->price,
+                    'price_special'   => $single_domain->price_special,
+                    'date_payment'   => $single_domain->date_payment,
+                    'duration_id'   => $single_domain->duration_id,
+                    'status_id'   => $single_domain->status_id,
                 ]);
                 // contract Hosting
-                $contract_hosting   = ContractHostings::create([
+                $single_package = Packages::find($item['package_id']);
+                ContractHostings::create([
                     'contract_id' => $contract->id,
-                    'package_id'  => 1
+                    'package_id'  => $single_package->id,
+                    'name' => $single_package->name,
+                    'gb' => $single_package->gb,
+                    'ram' => $single_package->ram,
+                    'price' => $single_package->price,
+                    'price_special' => $single_package->price_special,
+                    'package_infomations' => 'Thông tin tài khoản here',
+                    'status_id' => $single_package->status_id
                 ]);
                 // contract Prices
                 $price = [];
                 $price = $item['prices'];
                 $price['contract_id'] = $contract->id;
-                $contract_prices   = ContractPrices::create($price);
+                ContractPrices::create($price);
             }
         }
     }

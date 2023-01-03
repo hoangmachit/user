@@ -10,7 +10,6 @@ use App\Models\ContractPrices;
 use App\Models\ContractCancels;
 use App\Models\ContractDesigns;
 use App\Models\ContractDomains;
-use App\Models\ContractHostings;
 
 class Contracts extends Model
 {
@@ -33,29 +32,25 @@ class Contracts extends Model
         'note',
         'status_id',
     ];
-    public function designs()
+    public function design()
     {
-        return $this->hasMany(ContractDesigns::class, 'contract_id', 'id')->with('designs');
+        return $this->hasOne(ContractDesigns::class, 'contract_id', 'id');
     }
     public function domains()
     {
-        return $this->hasMany(ContractDomains::class, 'contract_id', 'id')->with('domains');
-    }
-    public function hostings()
-    {
-        return $this->hasMany(ContractHostings::class, 'contract_id', 'id')->with('hostings');
+        return $this->hasMany(ContractDomains::class, 'contract_id', 'id');
     }
     public function cancels()
     {
-        return $this->hasMany(ContractCancels::class, 'contract_id', 'id')->with('cancels');
+        return $this->hasMany(ContractCancels::class, 'contract_id', 'id');
     }
     public function customers()
     {
-        return $this->hasMany(ContractCustomers::class, 'contract_id', 'id')->with('customers');
+        return $this->hasMany(ContractCustomers::class, 'contract_id', 'id');
     }
-    public function prices()
+    public function price()
     {
-        return $this->hasMany(ContractPrices::class, 'contract_id', 'id');
+        return $this->hasOne(ContractPrices::class, 'contract_id', 'id');
     }
     public function status()
     {

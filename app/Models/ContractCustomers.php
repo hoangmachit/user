@@ -23,6 +23,8 @@ class ContractCustomers extends Model
         'address',
         'birth_day',
         'identity_card',
+        'identity_before',
+        'identity_after',
         'company_name',
         'company_address',
         'company_tax_code',

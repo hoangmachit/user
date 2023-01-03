@@ -15,12 +15,13 @@ class CreateContractHostingsTable extends Migration
     {
         Schema::create('contract_hostings', function (Blueprint $table) {
             $table->id();
-            $table->double('gb', 12, 2)->nullable();
-            $table->double('ram', 12, 2)->nullable();
+            $table->string('name', 255)->nullable();
+            $table->integer('gb')->default(0);
+            $table->integer('ram')->default(0);
             $table->double('price', 12, 2)->default(0);
             $table->double('price_special', 12, 2)->default(0);
-            $table->text('infomations', 1000)->nullable();
             $table->smallInteger('status_id')->default(1);
+            $table->text('package_infomations')->nullable();
             $table->timestamps();
         });
     }
