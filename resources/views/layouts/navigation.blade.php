@@ -104,26 +104,14 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.setting.index') }}" title="Cấu hình chung">
+                        <a class="nav-link" href="{{ route('admin.setting.index') }}" title="Cấu hình tài khoản">
                             <span class="d-flex justify-content-center align-items-center">
                                 <span class="svg">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                        <circle cx="12" cy="14" r="2"></circle>
-                                        <path d="M12 10.5v1.5"></path>
-                                        <path d="M12 16v1.5"></path>
-                                        <path d="M15.031 12.25l-1.299 .75"></path>
-                                        <path d="M10.268 15l-1.3 .75"></path>
-                                        <path d="M15 15.803l-1.285 -.773"></path>
-                                        <path d="M10.285 12.97l-1.285 -.773"></path>
-                                        <path d="M14 3v4a1 1 0 0 0 1 1h4"></path>
-                                        <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z">
-                                        </path>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sliders" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M11.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM9.05 3a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0V3h9.05zM4.5 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM2.05 8a2.5 2.5 0 0 1 4.9 0H16v1H6.95a2.5 2.5 0 0 1-4.9 0H0V8h2.05zm9.45 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm-2.45 1a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0v-1h9.05z"></path>
                                     </svg>
                                 </span>
-                                Cấu hình chung
+                                Cấu hình tài khoản
                             </span>
                         </a>
                     </li>

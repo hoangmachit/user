@@ -26,6 +26,7 @@ class CreateContractDomainsTable extends Migration
             $table->integer('duration_id')->default(1);
             $table->smallInteger('status_id')->default(1);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

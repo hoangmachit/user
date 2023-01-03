@@ -40,6 +40,10 @@ class Contracts extends Model
     {
         return $this->hasMany(ContractDomains::class, 'contract_id', 'id');
     }
+    public function hostings()
+    {
+        return $this->hasMany(ContractHostings::class, 'contract_id', 'id');
+    }
     public function cancels()
     {
         return $this->hasMany(ContractCancels::class, 'contract_id', 'id');

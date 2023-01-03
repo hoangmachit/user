@@ -146,9 +146,7 @@
                                     <select class="form-select form-select-md" name="customer_id" id="customer_id">
                                         <option value="0">No Customer</option>
                                         @foreach ($customers as $item)
-                                            <option
-                                                {{ old('customer_id') ? 'selected' : (!empty($contract->customer) && $item->id === $contract->customer->id ? 'selected' : '') }}
-                                                data-href="{{ route('admin.contract.customer', $item) }}"
+                                            <option {{ $item->id === $contract_customer->customer_id ? 'selected' : '' }}
                                                 value="{{ $item->id }}">{{ $item->full_name() }}</option>
                                         @endforeach
                                     </select>
@@ -165,7 +163,8 @@
                                     <select class="form-select form-select-md" name="design_id" id="design_id">
                                         <option value="0">No Design</option>
                                         @foreach ($designs as $item)
-                                            <option value="{{ $item->id }}">{{ $item->full_name() }}</option>
+                                            <option {{ $item->id === $contract_design->design_id ? 'selected' : '' }}
+                                                value="{{ $item->id }}">{{ $item->full_name() }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -175,19 +174,19 @@
                     <div class="card mt-4" id="card-domain">
                         <div class="card-header">Thông tin tên miền</div>
                         <div class="card-body">
-                            <div v-for="(domain, key) in domains" class="row mb-2 p-2">
+                            <div v-for="(domain, key) in contract_domains" class="row mb-2 p-2">
                                 <div class="col-md-12 p-3 border rounded-2">
                                     <div class="mb-3">
                                         <label for="" class="form-label">Choice domains</label>
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <select class="form-select"
-                                                @change="changeDomain($event, key, domain.old_id)">
-                                                <option value="0">Choice domain</option>
-                                                <option v-for="(item, index) in all_domains"
+                                            <select class="form-select" @change="changeSelectDomain($event, key)">
+                                                <option v-if="domain.old_domain_id == 0" value="0">Choice domain
+                                                </option>
+                                                <option v-for="(item, index) in list.domains"
                                                     v-bind:selected="domain.domain_id === item.id" v-bind:value="item.id">
                                                     @{{ item.domain_name }}</option>
                                             </select>
-                                            <button @click="deleteDomain(domain)" type="button"
+                                            <button type="button" @click="removeDomain(domain, key)"
                                                 class="btn btn-danger w-250 ms-2">
                                                 <span class="d-flex justify-content-center align-items-center">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -201,23 +200,20 @@
                                                 </span>
                                             </button>
                                         </div>
-                                        <div v-if="errors && errors[key]">
-                                            <small class="text-danger">Please select domain information</small>
-                                        </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-5">
                                             <div class="mb-3">
                                                 <label for="" class="form-label">Price</label>
                                                 <input type="text" class="form-control" placeholder="0"
-                                                    :value="domain.price">
+                                                    :value="formatPrice(domain.price)">
                                             </div>
                                         </div>
                                         <div class="col-md-5">
                                             <div class="mb-3">
                                                 <label for="" class="form-label">Price Special</label>
                                                 <input type="text" class="form-control" readonly
-                                                    :value="domain.price_special" placeholder="0">
+                                                    :value="formatPrice(domain.price_special)" placeholder="0">
                                             </div>
                                         </div>
                                     </div>
@@ -226,10 +222,10 @@
                             <div class="row mb-3">
                                 <div
                                     class="col-lg-12 col-md-12 col-sm-12 d-flex align-items-center justify-content-between">
-                                    <button type="button" class="btn btn-primary btn-add-domain"
-                                        @click="minusDomain">Add domains</button>
-                                    <button v-if="domains.length" type="button"
-                                        class="btn btn-success btn-save-domain me-2" @click="saveDomain()">Save
+                                    <button type="button" class="btn btn-primary btn-add-domain" @click="addDomain">Add
+                                        domain</button>
+                                    <button v-if="contract_domains.length" type="button"
+                                        class="btn btn-success btn-save-domain me-2" @click="saveDomain">Save
                                         domains</button>
                                 </div>
                             </div>
@@ -238,32 +234,84 @@
                     <div class="card mt-4" id="card-package">
                         <div class="card-header">Thông tin hosting</div>
                         <div class="card-body">
+                            <div v-for="(package, key) in contract_packages" class="row mb-2 p-2">
+                                <div class="col-md-12 p-3 border rounded-2">
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Choice package</label>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <select class="form-select" @change="changeSelectPackage($event, key)">
+                                                <option v-if="package.old_package_id == 0" value="0">Choice package
+                                                </option>
+                                                <option v-for="(item, index) in list.packages"
+                                                    v-bind:selected="package.package_id === item.id"
+                                                    v-bind:value="item.id">
+                                                    @{{ item.name }}</option>
+                                            </select>
+                                            <button type="button" @click="removePackage(package, key)"
+                                                class="btn btn-danger w-250 ms-2">
+                                                <span class="d-flex justify-content-center align-items-center">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                        fill="currentColor" class="bi bi-trash me-1" viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                        <path fill-rule="evenodd"
+                                                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                                    </svg>
+                                                    Xóa package
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="mb-3">
+                                                <label for="" class="form-label">Price</label>
+                                                <input type="text" class="form-control" placeholder="0"
+                                                    :value="formatPrice(package.price)">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="mb-3">
+                                                <label for="" class="form-label">Price Special</label>
+                                                <input type="text" class="form-control" readonly
+                                                    :value="formatPrice(package.price_special)" placeholder="0">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row mb-3">
-                                <div class="col-lg-12 col-md-12 col-sm-12 d-flex align-items-center justify-content-end">
-                                    <button type="button" class="btn btn-primary btn-add-hosting">Add Hosting</button>
+                                <div
+                                    class="col-lg-12 col-md-12 col-sm-12 d-flex align-items-center justify-content-between">
+                                    <button type="button" class="btn btn-primary btn-add-hosting"
+                                        @click="addPackage">Add hosting</button>
+                                    <button v-if="contract_packages.length" type="button"
+                                        class="btn btn-success btn-save-domain me-2" @click="savePackage">Save
+                                        Hosting</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="card mt-4">
                         <div class="card-footer border-0">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <button class="btn btn-warning text-decoration-none" type="reset">
+                            <div class="d-flex justify-content-between align-items-between">
+                                <button class="btn btn-danger text-decoration-none btn-delete" type="button">
                                     <span class="d-flex justify-content-center align-items-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            fill="currentColor" class="bi bi-arrow-clockwise me-1" viewBox="0 0 16 16">
-                                            <path fill-rule="evenodd"
-                                                d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"></path>
+                                            fill="currentColor" class="bi bi-trash me-1" viewBox="0 0 16 16">
                                             <path
-                                                d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z">
-                                            </path>
-                                        </svg> Reset
+                                                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                            <path fill-rule="evenodd"
+                                                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                        </svg>
+                                        Xóa hợp đồng
                                     </span>
                                 </button>
                                 <div class="d-flex justify-conten-end align-items-center">
                                     <select class="form-select form-select-md me-2" name="status_id" id="status_id">
                                         @foreach ($status as $item)
-                                            <option {{ old('status_id') == $item->id ? 'selected' : '' }}
+                                            <option
+                                                {{ old('status_id') ? 'selected' : ($item->id === $contract->status_id ? 'selected' : '') }}
                                                 value="{{ $item->id }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
@@ -287,6 +335,11 @@
                         </div>
                     </div>
                 </form>
+                <form action="{{ route('admin.contract.destroy', $contract) }}" id="form-delete" method="POST"
+                    role="form">
+                    @csrf
+                    @method('DELETE')
+                </form>
             </div>
         </div>
     </div>
@@ -296,135 +349,184 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
         const contract_id = '{{ $contract->id }}';
+        const PUBLIC_API = 'https://user.local/admin';
         const {
             createApp
         } = Vue
         createApp({
             data() {
                 return {
-                    all_domains: [],
-                    domains: [],
-                    hostings: [],
+                    list: [],
+                    contract_domains: [],
+                    contract_packages: [],
                     toast: false,
-                    message: "",
-                    errors: []
+                    message: ""
                 }
             },
             methods: {
-                minusDomain() {
-                    this.domains.push({
-                        domain_id: 0,
-                        old_id: 0,
-                        price: 0,
-                        price_special: 0
-                    });
-                },
-                async changeDomain(event, key, old_id) {
-                    const domain_id = event.target.value;
-                    if (domain_id == 0) {
-                        this.domains[key] = {
-                            domain_id: 0,
-                            old_id: 0,
-                            price: 0,
-                            price_special: 0
-                        }
-                        return false;
-                    }
-                    if (domain_id != 0) {
-                        this.errors[key] = false;
-                    }
-                    await axios.get(`http://localhost/user/public/admin/contract/${domain_id}/domain`)
-                        .then((response) => {
-                            const {
-                                domain
-                            } = response.data;
-                            this.domains[key] = {
-                                domain_id: domain.id,
-                                old_id: old_id,
-                                price: domain.price,
-                                price_special: domain.price_special
-                            };
-                        });
-                },
-                async saveDomain() {
-                    let check = false;
-                    this.domains.forEach((item, key) => {
-                        if (item.domain_id == 0) {
-                            this.errors[key] = true;
-                            if (!check) {
-                                check = true;
-                            }
-                        }
-                    });
-                    if (check) {
-                        return false;
-                    }
-                    await axios.post(`http://localhost/user/public/admin/contract/save/domain`, {
-                        contract_id: contract_id,
-                        domains: this.domains
-                    }).
-                    then((response) => {
-                        this.toast = true;
-                        this.message = "Successfully saved the domain !!!";
-                    });
-                },
-                async deleteDomain(domain) {
-                    await axios.delete(`http://localhost/user/public/admin/contract/delete/domain`, {
-                        params: {
-                            contract_id: contract_id,
-                            domain_id: domain.domain_id
-                        }
-                    }).
-                    then((response) => {
-                        this.toast = true;
-                        this.message = "You have delete to domain name !!!";
-                        this.getDomains();
-                    });
-                },
-                async allDomain() {
-                    await axios.get(`http://localhost/user/public/admin/domain/all`).
-                    then((response) => {
-                        const {
-                            all_domains
-                        } = response.data;
-                        this.all_domains = all_domains;
-                    });
-                },
-                async getDomains() {
-                    await axios.get(`http://localhost/user/public/admin/contract/list/domain`, {
-                        params: {
-                            contract_id: contract_id
-                        }
-                    }).
-                    then((response) => {
-                        const {
-                            domains
-                        } = response.data;
-                        this.domains = domains;
-                    });
-                },
-                async getPackages(){
-                    await axios.get(`http://localhost/user/public/admin/contract/list/package`, {
-                        params: {
-                            contract_id: contract_id
-                        }
-                    }).
-                    then((response) => {
-                        const {
-                            hostings
-                        } = response.data;
-                        this.hostings = hostings;
-                    });
-                },
                 closeToast() {
                     this.toast = false;
                     this.message = "";
+                },
+                addDomain() {
+                    const default_domain = {
+                        id: 0,
+                        domain_name: "",
+                        price: 0,
+                        price_special: 0,
+                        old_domain_id: 0
+                    };
+                    this.contract_domains.push(default_domain);
+                },
+                addPackage() {
+                    const default_package = {
+                        id: 0,
+                        name: "",
+                        price: 0,
+                        price_special: 0,
+                        package_id: 0,
+                        old_package_id: 0
+                    };
+                    this.contract_packages.push(default_package);
+                },
+                formatPrice(value) {
+                    let val = (value / 1).toFixed(0).replace('.', ',')
+                    return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+                },
+                async saveDomain() {
+                    axios.post(`${PUBLIC_API}/contract/save-domain`, {
+                            contract_domains: this.contract_domains,
+                            contract_id: contract_id
+                        })
+                        .then((response) => {
+                            this.getDataDomainsPackage();
+                            this.toast = true;
+                            this.message = "Add domain successfully!!!";
+                        });
+                },
+                async savePackage() {
+                    axios.post(`${PUBLIC_API}/contract/save-package`, {
+                            contract_packages: this.contract_packages,
+                            contract_id: contract_id
+                        })
+                        .then((response) => {
+                            this.getDataDomainsPackage();
+                        });
+                    this.toast = true;
+                    this.message = "Add package successfully!!!";
+                },
+                async removeDomain(domain, key) {
+                    if (domain.id != 0 && domain.domain_id != 0) {
+                        axios.delete(`${PUBLIC_API}/contract/delete-domain`, {
+                                data: {
+                                    domain,
+                                    contract_id
+                                }
+                            })
+                            .then((response) => {
+                                const {
+                                    result
+                                } = response.data;
+                            });
+                    }
+                    this.contract_domains.splice(key, 1);
+                    return true;
+                },
+                async removePackage(package, key) {
+                    if (package.id != 0 && package.package_id != 0) {
+                        axios.delete(`${PUBLIC_API}/contract/delete-package`, {
+                                data: {
+                                    package,
+                                    contract_id
+                                }
+                            })
+                            .then((response) => {
+                                const {
+                                    result
+                                } = response.data;
+                            });
+                    }
+                    this.contract_packages.splice(key, 1);
+                    return true;
+                },
+                async getList() {
+                    axios.get(`${PUBLIC_API}/contract/list`)
+                        .then((response) => {
+                            const {
+                                result
+                            } = response.data;
+                            this.list = result;
+                        });
+                },
+                async getDataDomainsPackage() {
+                    axios.get(`${PUBLIC_API}/contract/data-all`, {
+                            params: {
+                                contract_id
+                            }
+                        })
+                        .then((response) => {
+                            const {
+                                result
+                            } = response.data;
+                            const {
+                                contract_domains,
+                                contract_packages
+                            } = result;
+                            this.contract_domains = contract_domains;
+                            this.contract_packages = contract_packages;
+                        });
+                },
+                async changeSelectDomain(event, key) {
+                    let domain_id = parseInt(event.target.value);
+                    if (domain_id == 0) {
+                        return true;
+                    }
+                    axios.get(`${PUBLIC_API}/contract/detail-domain`, {
+                            params: {
+                                domain_id
+                            }
+                        })
+                        .then((response) => {
+                            const {
+                                result
+                            } = response.data;
+                            const {
+                                domain
+                            } = result;
+                            this.contract_domains[key].domain_name = domain.domain_name;
+                            this.contract_domains[key].domain_id = domain_id;
+                            this.contract_domains[key].price = domain.price;
+                            this.contract_domains[key].price_special = domain.price_special;
+                        });
+                },
+                async changeSelectPackage(event, key) {
+                    let package_id = parseInt(event.target.value);
+                    if (package_id == 0) {
+                        return true;
+                    }
+                    axios.get(`${PUBLIC_API}/contract/detail-package`, {
+                            params: {
+                                package_id
+                            }
+                        })
+                        .then((response) => {
+                            const {
+                                result
+                            } = response.data;
+                            const {
+                                package
+                            } = result;
+                            this.contract_packages[key].name = package.name;
+                            this.contract_packages[key].package_id = package_id;
+                            this.contract_packages[key].price = package.price;
+                            this.contract_packages[key].price_special = package.price_special;
+                        });
                 }
+
             },
             mounted() {
-                this.allDomain();
-                this.getDomains();
-                this.getPackages();
+                this.getList();
+                this.getDataDomainsPackage();
             },
         }).mount('#page-contract');
     </script>

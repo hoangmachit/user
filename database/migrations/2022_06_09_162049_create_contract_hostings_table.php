@@ -23,6 +23,7 @@ class CreateContractHostingsTable extends Migration
             $table->smallInteger('status_id')->default(1);
             $table->text('package_infomations')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

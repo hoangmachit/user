@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Status;
 use App\Http\Common\Constant;
+use App\Models\ContractCustomers;
+use App\Models\ContractDesigns;
 use App\Models\ContractDomains;
 use App\Models\ContractHostings;
 use App\Models\Contracts;
@@ -15,7 +17,6 @@ use App\Models\Designs;
 use Carbon\Carbon;
 use Validator;
 use DB;
-use PhpParser\Node\Stmt\Return_;
 
 class ContractController extends Controller
 {
@@ -26,7 +27,7 @@ class ContractController extends Controller
      */
     public function index(Request $request)
     {
-        $contracts = Contracts::with('domains', 'customers')->paginate(Constant::PAGINATE);
+        $contracts = Contracts::with('domains', 'customers', 'hostings')->paginate(Constant::PAGINATE);
         return view(
             'admin.contract.index',
             [
@@ -45,7 +46,9 @@ class ContractController extends Controller
             'payment_2st' => 'required',
             'date_payment_1st' => 'required',
             'date_payment_2st' => 'required',
-            'status_id'        => 'required'
+            'status_id'        => 'required',
+            'customer_id'      => 'required',
+            'design_id'        => 'required'
         ];
     }
     /**
@@ -56,16 +59,12 @@ class ContractController extends Controller
     public function create(Request $request)
     {
         $status    = Status::all();
-        $domains   = Domains::all();
-        $packages  = Packages::all();
         $customers = Customers::all();
         $designs   = Designs::all();
         return view(
             'admin.contract.create',
             [
                 'status'       => $status,
-                'domains'      => $domains,
-                'packages'     => $packages,
                 'customers'    => $customers,
                 'designs'      => $designs
             ]
@@ -197,6 +196,8 @@ class ContractController extends Controller
         $packages  = Packages::all();
         $customers = Customers::all();
         $designs   = Designs::all();
+        $contract_design  = ContractDesigns::where('contract_id', $contract->id)->first();
+        $contract_customer  = ContractCustomers::where('contract_id', $contract->id)->first();
         //
         return view(
             'admin.contract.edit',
@@ -205,7 +206,9 @@ class ContractController extends Controller
                 'packages'     => $packages,
                 'customers'    => $customers,
                 'designs'      => $designs,
-                'contract'     => $contract
+                'contract'     => $contract,
+                'contract_design' => $contract_design,
+                'contract_customer' => $contract_customer
             ]
         );
     }
@@ -217,9 +220,73 @@ class ContractController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Contracts $contract)
     {
-        //
+        $data = $request->all();
+        $roles = $this->_roles();
+        $validator = Validator::make($data, $roles);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput($request->all());
+        }
+        $contract->name = $data['name'];
+        $contract->code  = $data['code'];
+        $contract->signing_date = $data['signing_date'];
+        $contract->date_of_delivery = $data['date_of_delivery'];
+        $contract->payment_1st     = $data['payment_1st'];
+        $contract->payment_2st = $data['payment_2st'];
+        $contract->date_payment_1st = $data['date_payment_1st'];
+        $contract->date_payment_2st = $data['date_payment_2st'];
+        $contract->note = $data['note'];
+        $contract->status_id = $data['status_id'];
+        if ($contract->save()) {
+            $contract_design = ContractDesigns::where('contract_id', $contract->id)->first();
+            if (!empty($contract_design)) {
+                $design = Designs::find($data['design_id']);
+                if (!empty($design)) {
+                    $contract_design->contract_id = $contract->id;
+                    $contract_design->design_id = $design->id;
+                    $contract_design->first_name = $design->first_name;
+                    $contract_design->last_name = $design->last_name;
+                    $contract_design->url = $design->url;
+                    $contract_design->note = $design->note;
+                    $contract_design->date_start = $design->date_start;
+                    $contract_design->date_finish = $design->date_finish;
+                    $contract_design->font_family = $design->font_family;
+                    $contract_design->url_example = $design->url_example;
+                    $contract_design->status_id = $design->status_id;
+                    $contract_design->photo = $design->photo;
+                    $contract_design->save();
+                }
+            }
+            $contract_customer = ContractCustomers::where('contract_id', $contract->id)->first();
+            if (!empty($contract_customer)) {
+                $customer = Customers::find($data['customer_id']);
+                if (!empty($customer)) {
+                    $contract_customer->contract_id = $contract->id;
+                    $contract_customer->customer_id = $customer->id;
+                    $contract_customer->last_name = $customer->last_name;
+                    $contract_customer->first_name = $customer->first_name;
+                    $contract_customer->address = $customer->address;
+                    $contract_customer->birth_day = $customer->birth_day;
+                    $contract_customer->identity_card = $customer->identity_card;
+                    $contract_customer->identity_before = $customer->identity_before;
+                    $contract_customer->identity_after = $customer->identity_after;
+                    $contract_customer->company_name = $customer->company_name;
+                    $contract_customer->company_address = $customer->company_address;
+                    $contract_customer->company_tax_code = $customer->company_tax_code;
+                    $contract_customer->email = $customer->email;
+                    $contract_customer->phone = $customer->phone;
+                    $contract_customer->zalo = $customer->zalo;
+                    $contract_customer->fax = $customer->fax;
+                    $contract_customer->note = $customer->note;
+                    $contract_customer->status_id = $customer->status_id;
+                    $contract_customer->save();
+                }
+            }
+            return redirect()->route('admin.contract.edit', [$contract])->with('_success', __('alert.update.success'));
+        } else {
+            return redirect()->back()->withInput()->with('_success', __('alert.update.errors'));
+        }
     }
 
     /**
@@ -228,139 +295,210 @@ class ContractController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Contracts $contract)
     {
-        //
+        $contract->delete();
+        return redirect()->route('admin.contract.index')->with('_success', __('alert.delete.success'));
     }
-    public function customer(Customers $customer)
+
+    //* List domain and Package  show button adđ */
+    public function list()
     {
-        $customer->image_identity_after = asset('/uploads/designs/') . "/" . $customer->identity_after;
-        $customer->image_identity_before = asset('/uploads/designs/') . "/" . $customer->identity_before;
-        return response([
-            'customer' => $customer
-        ], 200);
+        $domains = Domains::select('id', 'domain_name', 'price', 'price_special')->get();
+        $packages = Packages::select('id', 'name', 'price', 'price_special')->get();
+        return sendResponse(
+            [
+                'domains' => $domains,
+                'packages' => $packages
+            ],
+            'Get list data successfully !!!'
+        );
     }
-    public function domain(Domains $domain)
+    //*  Get all domains and pâckge */
+    public function data_all(Request $request)
     {
-        return response([
-            'domain' => $domain
-        ], 200);
-    }
-    public function package(Packages $package)
-    {
-        return response([
-            'package' => $package
-        ], 200);
-    }
-    public function design(Designs $design)
-    {
-        return response([
-            'design' => $design
-        ], 200);
-    }
-    public function save_domain(Request $request)
-    {
-        $data = $request->all();
-        $contract_id = $data['contract_id'];
-        $domains = $data['domains'];
-        if (!empty($domains)) {
-            foreach ($domains as $key => $value) {
-                $domain_id = $value['domain_id'];
-                $domain = Domains::find($domain_id);
-                $contract_domain  = ContractDomains::where([
-                    'contract_id' => $contract_id,
-                    'domain_id'   => $domain_id,
-                ])->first();
-                $data_insert = [
-                    'name' => $domain->name,
-                    'domain_name' => $domain->domain_name,
-                    'address' => $domain->address,
-                    'domain_init_id' => $domain->domain_init_id,
-                    'note' => $domain->note,
-                    'price' => $value['price'],
-                    'price_special' => $value['price_special'],
-                    'date_payment' => $domain->date_payment,
-                    'duration_id' => $domain->duration_id,
-                    'status_id' => $domain->status_id,
-                    'contract_id' => $contract_id,
-                    'domain_id'   => $domain_id
-                ];
-                if (empty($contract_domain)) {
-                    ContractDomains::create($data_insert);
-                } else {
-                    $contract_domain->name = $domain->name;
-                    $contract_domain->domain_name = $domain->domain_name;
-                    $contract_domain->address = $domain->address;
-                    $contract_domain->domain_init_id = $domain->domain_init_id;
-                    $contract_domain->note = $domain->note;
-                    $contract_domain->price = $value['price'];
-                    $contract_domain->price_special = $value['price_special'];
-                    $contract_domain->date_payment = $domain->date_payment;
-                    $contract_domain->duration_id = $domain->duration_id;
-                    $contract_domain->status_id = $domain->status_id;
-                    $contract_domain->save;
-                }
-            }
+        $contract_id = $request->get('contract_id');
+        $contract_domains   = ContractDomains::select('id', 'domain_name', 'price', 'price_special', 'domain_id')->where('contract_id', $contract_id)->get();
+        foreach ($contract_domains as $key => $ct_d) {
+            $ct_d->old_domain_id = $ct_d->domain_id;
         }
-        return response([
-            'data' => $data
-        ], 200);
+        $contract_packages  = ContractHostings::select('id', 'name', 'price', 'price_special', 'package_id')->where('contract_id', $contract_id)->get();
+        foreach ($contract_packages as $key => $ct_p) {
+            $ct_p->old_package_id = $ct_p->package_id;
+        }
+        return sendResponse(
+            [
+                'contract_domains' => $contract_domains,
+                'contract_packages' => $contract_packages
+            ],
+            'Get all data domains and packages successfully !!!'
+        );
     }
-    public function save_package(Request $request)
+    // * GET Detail domains */
+    public function detail_domain(Request $request)
     {
-        return response([
-            'request' => $request
-        ], 200);
+        $domain_id = $request->get('domain_id');
+        $domain = Domains::select('id', 'domain_name', 'price', 'price_special')->find($domain_id);
+        return sendResponse(
+            [
+                'domain' => $domain
+            ],
+            'Get single domain successfully !!!'
+        );
     }
+    // * GET Detail package */
+    public function detail_package(Request $request)
+    {
+        $package_id = $request->get('package_id');
+        $package = Packages::select('id', 'name', 'price', 'price_special')->find($package_id);
+        return sendResponse(
+            [
+                'package' => $package
+            ],
+            'Get single package successfully !!!'
+        );
+    }
+
+    // * DELETE DOMAINS */
     public function delete_domain(Request $request)
     {
         $contract_id = $request->get('contract_id');
-        $domain_id = $request->get('domain_id');
+        $domain      = $request->get('domain');
+
         $contract_domain = ContractDomains::where([
             'contract_id' => $contract_id,
-            'domain_id'   => $domain_id
+            'domain_id'   => $domain['domain_id']
         ])->first();
-        $contract_domain->delete();
-        return response([
-            'contract_domain' => $contract_domain
-        ], 200);
+        $data = $contract_domain;
+        if (!empty($contract_domain)) {
+            $contract_domain->delete();
+        }
+        return sendResponse(
+            [
+                'contract_id' => $contract_id,
+                'domain' => $domain,
+                'contract_domain' => $data
+            ],
+            'Get delete package successfully !!!'
+        );
     }
-    public function list_domain(Request $request)
+
+    // * DELETE PACKAGE */
+    public function delete_package(Request $request)
     {
         $contract_id = $request->get('contract_id');
-        $domains = ContractDomains::where('contract_id', $contract_id)->get();
-        $result = [];
-        if (!empty($domains)) {
-            foreach ($domains as $item) {
-                $data = [];
-                $data['domain_id'] = $item->domain_id;
-                $data['old_id']    = $item->domain_id;
-                $data['price']     = $item->price;
-                $data['price_special'] = $item->price_special;
-                $result[] = $data;
-            }
+        $package      = $request->get('package');
+        $contract_package = ContractHostings::where([
+            'contract_id' => $contract_id,
+            'package_id'   => $package['package_id']
+        ])->first();
+        $data = $contract_package;
+        if (!empty($contract_package)) {
+            $contract_package->delete();
         }
-        return response([
-            'domains' => $result
-        ], 200);
+        return sendResponse(
+            [
+                'contract_id' => $contract_id,
+                'package' => $package,
+                'contract_package' => $data
+            ],
+            'Get delete package successfully !!!'
+        );
     }
-    public function list_package(Request $request)
+    // * SAVE CONTRACT DOMAINS */
+    public function save_domain(Request $request)
     {
-        $contract_id = $request->get('contract_id');
-        $packages = ContractHostings::where('contract_id', $contract_id)->get();
-        $result = [];
-        if (!empty($packages)) {
-            foreach ($packages as $item) {
-                $data = [];
-                $data['domain_id'] = $item->domain_id;
-                $data['old_id']    = $item->domain_id;
-                $data['price']     = $item->price;
-                $data['price_special'] = $item->price_special;
-                $result[] = $data;
+        $contract_domains = $request->get('contract_domains');
+        $contract_id      = $request->get('contract_id');
+        foreach ($contract_domains as $key => $cd) {
+            $domain_id = $cd['domain_id'];
+            $old_domain_id = $cd['old_domain_id'];
+            if ((int)$domain_id > 0) {
+                $ct_domain = ContractDomains::where([
+                    'contract_id' => $contract_id,
+                    'domain_id'   => $old_domain_id
+                ])->first();
+                $domain = Domains::find($domain_id);
+                if (empty($ct_domain)) {
+                    ContractDomains::create([
+                        'contract_id' => $contract_id,
+                        'domain_id' => $domain->id,
+                        'name' => $domain->name,
+                        'domain_name' => $domain->domain_name,
+                        'address' => $domain->address,
+                        'domain_init_id' => $domain->domain_init_id,
+                        'note' => $domain->note,
+                        'price' => $domain->price,
+                        'price_special' => $domain->price_special,
+                        'date_payment' => $domain->date_payment,
+                        'duration_id' => $domain->duration_id,
+                        'status_id' => $domain->status_id,
+                    ]);
+                } else {
+                    $ct_domain->contract_id =  $contract_id;
+                    $ct_domain->domain_id =  $domain->id;
+                    $ct_domain->name =  $domain->name;
+                    $ct_domain->domain_name =  $domain->domain_name;
+                    $ct_domain->address =  $domain->address;
+                    $ct_domain->domain_init_id =  $domain->domain_init_id;
+                    $ct_domain->note =  $domain->note;
+                    $ct_domain->price =  $domain->price;
+                    $ct_domain->price_special =  $domain->price_special;
+                    $ct_domain->date_payment =  $domain->date_payment;
+                    $ct_domain->duration_id =  $domain->duration_id;
+                    $ct_domain->status_id =  $domain->status_id;
+                    $ct_domain->save();
+                }
             }
         }
-        return response([
-            'hostings' => $result
-        ], 200);
+        return sendResponse(
+            [],
+            'Get save domain successfully !!!'
+        );
+    }
+    // * SAVE CONTRACT PACKAGE */
+    public function save_package(Request $request)
+    {
+        $contract_packages = $request->get('contract_packages');
+        $contract_id      = $request->get('contract_id');
+        foreach ($contract_packages as $key => $cd) {
+            $package_id = $cd['package_id'];
+            $old_package_id = $cd['old_package_id'];
+            if ((int)$package_id > 0) {
+                $ct_package = ContractHostings::where([
+                    'contract_id' => $contract_id,
+                    'package_id'   => $old_package_id
+                ])->first();
+                $package = Packages::find($package_id);
+                if (empty($ct_package)) {
+                    ContractHostings::create([
+                        'contract_id' => $contract_id,
+                        'package_id' => $package->id,
+                        'name' => $package->name,
+                        'gb' => $package->gb,
+                        'ram' => $package->ram,
+                        'price' => $package->price,
+                        'price_special' => $package->price_special,
+                        'package_infomations' => 'No infomations',
+                        'status_id' => $package->status_id
+                    ]);
+                } else {
+                    $ct_package->contract_id =  $contract_id;
+                    $ct_package->package_id =  $package->id;
+                    $ct_package->name =  $package->name;
+                    $ct_package->gb =  $package->gb;
+                    $ct_package->ram =  $package->ram;
+                    $ct_package->price =  $package->price;
+                    $ct_package->price_special =  $package->price_special;
+                    $ct_package->status_id =  $package->status_id;
+                    $ct_package->package_infomations = 'No infomations';
+                    $ct_package->save();
+                }
+            }
+        }
+        return sendResponse(
+            [],
+            'Get save package successfully !!!'
+        );
     }
 }

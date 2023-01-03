@@ -45,35 +45,21 @@ Route::group([
     });
     Route::resource('/domain', DomainController::class);
     Route::resource('/design', DesignController::class);
-    Route::resource('/contract', ContractController::class);
     Route::group([
         'prefix' => 'contract',
         'as'    => 'contract.',
         'name'  => 'contract.'
     ], function () {
-        Route::get('/{customer}/customer', [ContractController::class, 'customer'])->name('customer');
-        Route::group([
-            'prefix' => 'save',
-            'as'    => 'save.',
-            'name'  => 'save.'
-        ], function () {
-            Route::post('/domain', [ContractController::class, 'save_domain'])->name('domain');
-            Route::post('/package', [ContractController::class, 'save_package'])->name('package');
-        });
-        Route::group([
-            'prefix' => 'delete',
-            'as'    => 'delete.',
-            'name'  => 'delete.'
-        ], function () {
-            Route::delete('/domain', [ContractController::class, 'delete_domain'])->name('domain');
-            Route::post('/package', [ContractController::class, 'delete_package'])->name('package');
-        });
-        Route::get('/list/domain', [ContractController::class, 'list_domain'])->name('list_domain');
-        Route::get('/list/package', [ContractController::class, 'list_package'])->name('list_package');
-        Route::get('/{domain}/domain', [ContractController::class, 'domain'])->name('domain');
-        Route::get('/{package}/package', [ContractController::class, 'package'])->name('package');
-        Route::get('/{design}/design', [ContractController::class, 'design'])->name('design');
+        Route::get('/list', [ContractController::class, 'list'])->name('list');
+        Route::get('/data-all', [ContractController::class, 'data_all'])->name('data_all');
+        Route::get('/detail-domain', [ContractController::class, 'detail_domain'])->name('detail_domain');
+        Route::get('/detail-package', [ContractController::class, 'detail_package'])->name('detail_package');
+        Route::delete('/delete-domain', [ContractController::class, 'delete_domain'])->name('delete_domain');
+        Route::delete('/delete-package', [ContractController::class, 'delete_package'])->name('delete_package');
+        Route::post('/save-domain', [ContractController::class, 'save_domain'])->name('save_domain');
+        Route::post('/save-package', [ContractController::class, 'save_package'])->name('save_package');
     });
+    Route::resource('/contract', ContractController::class);
     Route::resource('/customer', CustomerController::class);
     Route::resource('/hosting', HostingController::class);
     Route::group([
@@ -82,5 +68,6 @@ Route::group([
         'name'  => 'admin.'
     ], function () {
         Route::get('/', [SettingController::class, 'index'])->name('index');
+        Route::put('/', [SettingController::class, 'change_password'])->name('change_password');
     });
 });

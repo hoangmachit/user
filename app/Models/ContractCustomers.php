@@ -33,7 +33,7 @@ class ContractCustomers extends Model
         'zalo',
         'fax',
         'note',
-        'status'
+        'status_id'
     ];
     public function customers()
     {

@@ -48,6 +48,7 @@
                                         <td>Payment 1st</td>
                                         <td>Payment 2st</td>
                                         <td>Domain</td>
+                                        <td>Hosting</td>
                                         <td>Customer</td>
                                         <th>Status</th>
                                     </tr>
@@ -70,6 +71,13 @@
                                                 @if (!empty($item->domains))
                                                     @foreach ($item->domains as $dm)
                                                         <span class="domain_name">{{ $dm->domain_name }}</span>
+                                                    @endforeach
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if (!empty($item->hostings))
+                                                    @foreach ($item->hostings as $ht)
+                                                        <span class="domain_name">{{ $ht->name }}</span>
                                                     @endforeach
                                                 @endif
                                             </td>
