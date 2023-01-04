@@ -7,7 +7,7 @@ use App\Models\Designs;
 use App\Models\Status;
 use Validator;
 
-class DesignController extends Controller
+class DesignController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,8 @@ class DesignController extends Controller
      */
     public function index(Request $request)
     {
-        $designs = Designs::with('status')->orderBy('id', 'desc')->get();
-        return view(
+        $designs = Designs::with('status')->orderBy('id', 'desc')->paginate(parent::setting()->page_design);
+        return parent::_view(
             'admin.design.index',
             [
                 'designs' => $designs
@@ -33,7 +33,7 @@ class DesignController extends Controller
     public function create(Request $request)
     {
         $status    = Status::all();
-        return view(
+        return parent::_view(
             'admin.design.create',
             [
                 'status' => $status
@@ -93,7 +93,7 @@ class DesignController extends Controller
     public function edit(Designs $design)
     {
         $status = Status::all();
-        return view(
+        return parent::_view(
             'admin.design.edit',
             [
                 'design' => $design,

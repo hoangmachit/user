@@ -6,7 +6,97 @@
             <div class="container">
                 <div class="col-md-10 mt-3">
                     <div class="card">
-                        <div class="card-header">1. Account infomations</div>
+                        <div class="card-header">1. Setting general</div>
+                        <div class="card-body">
+                            <form action="{{ route('admin.setting.update') }}" role="form" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <div class="mb-3">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label for="page_contract" class="form-label">Contract paginate</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input type="number" name="page_contract"
+                                                value="{{ old('page_contract') ? old('page_contract') : $setting->page_contract }}"
+                                                class="form-control" id="page_contract" min="2" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label for="page_customer" class="form-label">Customer paginate</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input type="number" name="page_customer"
+                                                value="{{ old('page_customer') ? old('page_customer') : $setting->page_customer }}"
+                                                class="form-control" id="page_customer" min="2" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label for="page_design" class="form-label">Design paginate</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input type="number" name="page_design"
+                                                value="{{ old('page_design') ? old('page_design') : $setting->page_design }}"
+                                                class="form-control" id="page_design" min="2" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label for="page_domain" class="form-label">Domain paginate</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input type="number" name="page_domain"
+                                                value="{{ old('page_domain') ? old('page_domain') : $setting->page_domain }}"
+                                                class="form-control" id="page_domain" min="2" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-9">
+                                        <button type="submit" class="btn btn-primary btn-black">
+                                            <span class="d-flex justify-conten-center align-items-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z">
+                                                    </path>
+                                                    <path fill-rule="evenodd"
+                                                        d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z">
+                                                    </path>
+                                                </svg> &nbsp; Update Setting
+                                            </span>
+                                        </button>
+                                        <button type="reset" class="btn btn-warning ms-2">
+                                            <span class="d-flex justify-conten-center align-items-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z">
+                                                    </path>
+                                                    <path fill-rule="evenodd"
+                                                        d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z">
+                                                    </path>
+                                                </svg> &nbsp; Reset
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-10 mt-3">
+                    <div class="card">
+                        <div class="card-header">2. Account infomations</div>
                         <div class="card-body">
                             <form action="{{ route('admin.setting.change_password') }}" role="form" method="POST">
                                 @csrf
@@ -78,7 +168,7 @@
                                 <div class="row">
                                     <div class="col-md-3"></div>
                                     <div class="col-md-9">
-                                        <button type="submit" class="btn btn-primary">
+                                        <button type="submit" class="btn btn-primary btn-black">
                                             <span class="d-flex justify-conten-center align-items-center">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                     fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">

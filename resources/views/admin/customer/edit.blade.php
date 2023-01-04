@@ -12,9 +12,9 @@
                     <div class="col-auto ms-auto d-print-none">
                         <div class="btn-list">
                             <a href="{{ route('admin.customer.index') }}"
-                                class="btn btn-primary d-none d-sm-inline-block"><svg xmlns="http://www.w3.org/2000/svg"
-                                    width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise"
-                                    viewBox="0 0 16 16">
+                                class="btn btn-primary d-none d-sm-inline-block btn-black"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd"
                                         d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
                                     <path
@@ -279,7 +279,8 @@
                                             </svg> Reset
                                         </span>
                                     </button>
-                                    <button type="submit" id="submit-design-create" class="btn btn-primary ms-auto">
+                                    <button type="submit" id="submit-design-create"
+                                        class="btn btn-primary ms-auto btn-black">
                                         <span class="d-flex justify-content-center align-items-center">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon me-1" width="16"
                                                 height="16" viewBox="0 0 24 24" stroke-width="2"

@@ -3,12 +3,14 @@
     padding: 0px;
     box-sizing: border-box;
 }
+
 ul.navigation {
     span.svg {
         width: 18px;
         height: 18px;
         margin-right: 6px;
         position: relative;
+
         svg {
             position: absolute;
             left: 0px;
@@ -18,6 +20,7 @@ ul.navigation {
         }
     }
 }
+
 .label_year {
     display: inline-block;
     padding: 0px 10px;
@@ -124,6 +127,7 @@ h3.title-name {
     width: 150px;
     text-transform: capitalize;
 }
+
 .split-w150 {
     overflow: hidden;
     white-space: nowrap;
@@ -131,9 +135,11 @@ h3.title-name {
     width: 150px;
     display: block;
 }
+
 .text-red {
     color: red;
 }
+
 .border-ec-dashed {
     border: 1px dashed #ccc !important;
 }
@@ -182,16 +188,14 @@ h3.title-name {
 }
 
 .progress-bar-striped {
-    background-image: linear-gradient(
-        45deg,
-        rgba(255, 255, 255, 0.15) 25%,
-        transparent 25%,
-        transparent 50%,
-        rgba(255, 255, 255, 0.15) 50%,
-        rgba(255, 255, 255, 0.15) 75%,
-        transparent 75%,
-        transparent
-    );
+    background-image: linear-gradient(45deg,
+            rgba(255, 255, 255, 0.15) 25%,
+            transparent 25%,
+            transparent 50%,
+            rgba(255, 255, 255, 0.15) 50%,
+            rgba(255, 255, 255, 0.15) 75%,
+            transparent 75%,
+            transparent);
     background-size: 1rem 1rem;
 }
 
@@ -238,33 +242,60 @@ h3.title-name {
     height: 100%;
     background: transparent;
 }
+
 .line-height-1 {
     line-height: 1;
 }
+
 /**  Paginate **/
 .render-paginate {
     padding: 1rem 0px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    nav > div:nth-child(1) {
+
+    nav>div:nth-child(1) {
         display: none;
     }
+
     svg {
         width: 20px;
         height: 20px;
         position: relative;
         top: -2px;
     }
+
     a {
         text-decoration: none;
         cursor: currentColor;
     }
 }
 
-.w-250{
+.w-250 {
     width: 250px;
 }
-.w-400{
+
+.w-400 {
     width: 400px;
+}
+
+.btn-black {
+    background: #000;
+    border-color: #000;
+
+    &:hover {
+        background: #000;
+        border-color: #000;
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, .5);
+        background: #000;
+        border-color: #000;
+    }
+
+    &:first-child:active {
+        background: #000;
+        border-color: #000;
+    }
 }

@@ -5,8 +5,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DesignController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\DomainController;
-use App\Http\Controllers\HostingController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DetailController;
 use App\Http\Controllers\SettingController;
 
 /*
@@ -31,6 +31,7 @@ Auth::routes([
 ]);
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/design/{design}/detail', [DetailController::class, 'detail'])->name('detail');
 
 Route::group([
     'middleware' => [
@@ -71,6 +72,7 @@ Route::group([
         'name'  => 'admin.'
     ], function () {
         Route::get('/', [SettingController::class, 'index'])->name('index');
-        Route::put('/', [SettingController::class, 'change_password'])->name('change_password');
+        Route::put('/change_password', [SettingController::class, 'change_password'])->name('change_password');
+        Route::put('/update', [SettingController::class, 'update'])->name('update');
     });
 });

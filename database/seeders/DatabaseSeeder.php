@@ -20,10 +20,11 @@ class DatabaseSeeder extends Seeder
             PackageSeeder::class,
             DomainInitSeeder::class,
             CancelsSeeder::class,
-            // DesignSeeder::class,
-            // DomainSeeder::class,
-            // CustomerSeeder::class,
-            // ContractSeeder::class
+            SettingSeeder::class,
+            DesignSeeder::class,
+            DomainSeeder::class,
+            CustomerSeeder::class,
+            ContractSeeder::class
         ]);
     }
 }

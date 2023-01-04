@@ -24,7 +24,7 @@
                     <div class="col-auto ms-auto d-print-none">
                         <div class="btn-list">
                             <a href="{{ route('admin.contract.index') }}"
-                                class="btn btn-primary d-none d-sm-inline-block"><svg xmlns="http://www.w3.org/2000/svg"
+                                class="btn btn-primary d-none d-sm-inline-block btn-black"><svg xmlns="http://www.w3.org/2000/svg"
                                     width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise"
                                     viewBox="0 0 16 16">
                                     <path fill-rule="evenodd"
@@ -222,7 +222,7 @@
                             <div class="row mb-3">
                                 <div
                                     class="col-lg-12 col-md-12 col-sm-12 d-flex align-items-center justify-content-between">
-                                    <button type="button" class="btn btn-primary btn-add-domain" @click="addDomain">Add
+                                    <button type="button" class="btn btn-primary btn-add-domain btn-black" @click="addDomain">Add
                                         domain</button>
                                     <button v-if="contract_domains.length" type="button"
                                         class="btn btn-success btn-save-domain me-2" @click="saveDomain">Save
@@ -283,7 +283,7 @@
                             <div class="row mb-3">
                                 <div
                                     class="col-lg-12 col-md-12 col-sm-12 d-flex align-items-center justify-content-between">
-                                    <button type="button" class="btn btn-primary btn-add-hosting"
+                                    <button type="button" class="btn btn-primary btn-add-hosting btn-black"
                                         @click="addPackage">Add hosting</button>
                                     <button v-if="contract_packages.length" type="button"
                                         class="btn btn-success btn-save-domain me-2" @click="savePackage">Save
@@ -316,7 +316,7 @@
                                         @endforeach
                                     </select>
                                     <button type="submit" id="submit-contract-create"
-                                        class="btn btn-primary ms-auto w-400">
+                                        class="btn btn-primary ms-auto btn-black w-400">
                                         <span class="d-flex justify-content-center align-items-center">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon me-1" width="16"
                                                 height="16" viewBox="0 0 24 24" stroke-width="2"

@@ -7,8 +7,7 @@ use App\Models\Status;
 use App\Models\Customers;
 use Validator;
 
-
-class CustomerController extends Controller
+class CustomerController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +16,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customers::orderBy('id', 'desc')->get();
-        return view(
+        $customers = Customers::orderBy('id', 'desc')->paginate(parent::setting()->page_customer);
+        return parent::_view(
             'admin.customer.index',
             [
                 'customers' => $customers
@@ -34,7 +33,7 @@ class CustomerController extends Controller
     public function create()
     {
         $status    = Status::all();
-        return view(
+        return parent::_view(
             'admin.customer.create',
             [
                 'status'       => $status
@@ -96,7 +95,7 @@ class CustomerController extends Controller
     public function edit(Customers $customer)
     {
         $status = Status::all();
-        return view(
+        return parent::_view(
             'admin.customer.edit',
             [
                 'status'   => $status,

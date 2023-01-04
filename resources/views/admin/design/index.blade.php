@@ -11,7 +11,8 @@
                     </div>
                     <div class="col-auto ms-auto d-print-none">
                         <div class="btn-list">
-                            <a href="{{ route('admin.design.create') }}" class="btn btn-primary d-none d-sm-inline-block">
+                            <a href="{{ route('admin.design.create') }}"
+                                class="btn btn-primary d-none d-sm-inline-block btn-black">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-plus" viewBox="0 0 16 16">
                                     <path
@@ -44,6 +45,7 @@
                                         <th class="w-1">No.</th>
                                         <th>Tên</th>
                                         <th>Full name</th>
+                                        <th width="100" class="text-center">View</th>
                                         <th width="100">Google driver</th>
                                         <th>Ngày bắt đầu</th>
                                         <th>Ngày kết thúc</th>
@@ -62,9 +64,20 @@
                                             </td>
                                             <td><span class="domain_name">{{ $item->full_name() }}</span>
                                             </td>
+                                            <td aligns="center" class="text-center">
+                                                <a class="line-height-1 btn btn-warning m-auto text-center" target="blank"
+                                                    href="{{ route('detail', $item) }}" title="Google driver">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                        fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                                        <path
+                                                            d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                                                    </svg>
+                                                </a>
+                                            </td>
                                             <td aligns="center">
-                                                <a class="line-height-1 btn btn-warning" target="blank" href="{{ $item->url }}"
-                                                    title="Google driver">
+                                                <a class="line-height-1 btn btn-warning" target="blank"
+                                                    href="{{ $item->url }}" title="Google driver">
                                                     Xem chi tiết
                                                 </a>
                                             </td>
@@ -81,6 +94,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
+                        {{ $designs->links('layouts.paginate') }}
                     </div>
                 </div>
             </div>

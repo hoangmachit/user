@@ -11,7 +11,7 @@
                     </div>
                     <div class="col-auto ms-auto d-print-none">
                         <div class="btn-list">
-                            <a href="{{ route('admin.customer.create') }}" class="btn btn-primary d-none d-sm-inline-block">
+                            <a href="{{ route('admin.customer.create') }}" class="btn btn-primary d-none d-sm-inline-block btn-black">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-plus" viewBox="0 0 16 16">
                                     <path
@@ -75,6 +75,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
+                        {{ $customers->links('layouts.paginate') }}
                     </div>
                 </div>
             </div>

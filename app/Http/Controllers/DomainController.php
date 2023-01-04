@@ -9,7 +9,7 @@ use App\Models\Durations;
 use App\Models\Status;
 use Validator;
 
-class DomainController extends Controller
+class DomainController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +18,8 @@ class DomainController extends Controller
      */
     public function index(Request $request)
     {
-        $domains = Domains::with('domain_init', 'status', 'duration')->orderBy('id', 'desc')->get();
-        return view(
+        $domains = Domains::with('domain_init', 'status', 'duration')->orderBy('id', 'desc')->paginate(parent::setting()->page_domain);
+        return parent::_view(
             'admin.domain.index',
             [
                 'domains' => $domains
@@ -37,7 +37,7 @@ class DomainController extends Controller
         $domain_inits = DomainInits::all();
         $durations = Durations::all();
         $status    = Status::all();
-        return view(
+        return parent::_view(
             'admin.domain.create',
             [
                 'domain_inits' => $domain_inits,
@@ -101,7 +101,7 @@ class DomainController extends Controller
         $domain_inits = DomainInits::all();
         $durations = Durations::all();
         $status = Status::all();
-        return view(
+        return parent::_view(
             'admin.domain.edit',
             [
                 'domain' => $domain,

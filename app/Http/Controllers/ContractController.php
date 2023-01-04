@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Status;
-use App\Http\Common\Constant;
 use App\Models\ContractCustomers;
 use App\Models\ContractDesigns;
 use App\Models\ContractDomains;
@@ -18,7 +17,7 @@ use Carbon\Carbon;
 use Validator;
 use DB;
 
-class ContractController extends Controller
+class ContractController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -27,8 +26,8 @@ class ContractController extends Controller
      */
     public function index(Request $request)
     {
-        $contracts = Contracts::with('domains', 'customers', 'hostings')->paginate(Constant::PAGINATE);
-        return view(
+        $contracts = Contracts::with('domains', 'customers', 'hostings')->paginate(parent::setting()->page_contract);
+        return parent::_view(
             'admin.contract.index',
             [
                 'contracts' => $contracts
@@ -61,7 +60,7 @@ class ContractController extends Controller
         $status    = Status::all();
         $customers = Customers::all();
         $designs   = Designs::all();
-        return view(
+        return parent::_view(
             'admin.contract.create',
             [
                 'status'       => $status,
@@ -199,7 +198,7 @@ class ContractController extends Controller
         $contract_design  = ContractDesigns::where('contract_id', $contract->id)->first();
         $contract_customer  = ContractCustomers::where('contract_id', $contract->id)->first();
         //
-        return view(
+        return parent::_view(
             'admin.contract.edit',
             [
                 'status'       => $status,

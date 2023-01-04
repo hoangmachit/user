@@ -12,7 +12,7 @@
                     <div class="col-auto ms-auto d-print-none">
                         <div class="btn-list">
                             <a href="{{ route('admin.contract.index') }}"
-                                class="btn btn-primary d-none d-sm-inline-block"><svg xmlns="http://www.w3.org/2000/svg"
+                                class="btn btn-primary btn-black d-none d-sm-inline-block"><svg xmlns="http://www.w3.org/2000/svg"
                                     width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise"
                                     viewBox="0 0 16 16">
                                     <path fill-rule="evenodd"
@@ -200,7 +200,7 @@
                                         @endforeach
                                     </select>
                                     <button type="submit" id="submit-contract-create"
-                                        class="btn btn-primary ms-auto w-250">
+                                        class="btn btn-primary ms-auto btn-black w-250">
                                         <span class="d-flex justify-content-center align-items-center">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon me-1" width="16"
                                                 height="16" viewBox="0 0 24 24" stroke-width="2"
