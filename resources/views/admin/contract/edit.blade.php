@@ -24,9 +24,9 @@
                     <div class="col-auto ms-auto d-print-none">
                         <div class="btn-list">
                             <a href="{{ route('admin.contract.index') }}"
-                                class="btn btn-primary d-none d-sm-inline-block btn-black"><svg xmlns="http://www.w3.org/2000/svg"
-                                    width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise"
-                                    viewBox="0 0 16 16">
+                                class="btn btn-primary d-none d-sm-inline-block btn-black"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd"
                                         d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
                                     <path
@@ -146,7 +146,8 @@
                                     <select class="form-select form-select-md" name="customer_id" id="customer_id">
                                         <option value="0">No Customer</option>
                                         @foreach ($customers as $item)
-                                            <option {{ $item->id === $contract_customer->customer_id ? 'selected' : '' }}
+                                            <option
+                                                {{ !empty($contract_customer) && $item->id === $contract_customer->customer_id ? 'selected' : '' }}
                                                 value="{{ $item->id }}">{{ $item->full_name() }}</option>
                                         @endforeach
                                     </select>
@@ -163,7 +164,8 @@
                                     <select class="form-select form-select-md" name="design_id" id="design_id">
                                         <option value="0">No Design</option>
                                         @foreach ($designs as $item)
-                                            <option {{ $item->id === $contract_design->design_id ? 'selected' : '' }}
+                                            <option
+                                                {{ !empty($contract_design) && $item->id === $contract_design->design_id ? 'selected' : '' }}
                                                 value="{{ $item->id }}">{{ $item->full_name() }}</option>
                                         @endforeach
                                     </select>
@@ -222,7 +224,8 @@
                             <div class="row mb-3">
                                 <div
                                     class="col-lg-12 col-md-12 col-sm-12 d-flex align-items-center justify-content-between">
-                                    <button type="button" class="btn btn-primary btn-add-domain btn-black" @click="addDomain">Add
+                                    <button type="button" class="btn btn-primary btn-add-domain btn-black"
+                                        @click="addDomain">Add
                                         domain</button>
                                     <button v-if="contract_domains.length" type="button"
                                         class="btn btn-success btn-save-domain me-2" @click="saveDomain">Save

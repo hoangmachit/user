@@ -27,6 +27,9 @@ class ArtisanController extends BaseController
                 break;
             default:
                 Artisan::call('cache:clear');
+                Artisan::call('route:cache');
+                Artisan::call('view:cache');
+                Artisan::call('config:cache');
                 break;
         }
         return redirect()->route('admin.artisan.index')->with('_success', __('alert.command.success'));

@@ -11,7 +11,8 @@
                     </div>
                     <div class="col-auto ms-auto d-print-none">
                         <div class="btn-list">
-                            <a href="{{ route('admin.customer.create') }}" class="btn btn-primary d-none d-sm-inline-block btn-black">
+                            <a href="{{ route('admin.customer.create') }}"
+                                class="btn btn-primary d-none d-sm-inline-block btn-black">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-plus" viewBox="0 0 16 16">
                                     <path
@@ -61,7 +62,9 @@
                                                 </a>
                                             </td>
                                             <td><span class="domain_name">{{ $item->phone }}</span></td>
-                                            <td><span class="btn btn-warning line-height-1">{{ $item->email }}</span></td>
+                                            <td><span
+                                                    class="btn @if (!empty($item->email)) btn-warning @endif line-height-1">{{ $item->email }}</span>
+                                            </td>
                                             <td>{{ $item->birth_day }}</td>
                                             <td>{{ $item->identity_card }}</td>
                                             <td>
