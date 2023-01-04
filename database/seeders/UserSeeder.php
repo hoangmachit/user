@@ -15,11 +15,20 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $user = [
-            'name' => 'Mạch Văn Hoàng',
-            'email' => 'hoangmach.website@gmail.com',
-            'password' => Hash::make('admin#123'),
+        $users = [
+            [
+                'name' => 'Mạch Văn Hoàng',
+                'email' => 'hoangmach.website@gmail.com',
+                'password' => Hash::make('admin#123'),
+            ],
+            [
+                'name' => 'Nguyễn Bá Chương',
+                'email' => 'chuong.mass@gmail.com',
+                'password' => Hash::make('admin#123'),
+            ]
         ];
-        User::create($user);
+        foreach ($users as $key => $item) {
+            User::create($item);
+        }
     }
 }

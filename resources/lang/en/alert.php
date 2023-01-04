@@ -25,4 +25,8 @@ return [
         'success' => 'Delete data successfully',
         'errors'  => 'Deleted errors data. Please try again !!!',
     ],
+    'command' => [
+        'success' => 'Command processing successful!!',
+        'errors'  => 'Command processing failed!!. Please try again !!!',
+    ],
 ];

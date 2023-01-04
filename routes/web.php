@@ -8,6 +8,7 @@ use App\Http\Controllers\DomainController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DetailController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\ArtisanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,5 +75,14 @@ Route::group([
         Route::get('/', [SettingController::class, 'index'])->name('index');
         Route::put('/change_password', [SettingController::class, 'change_password'])->name('change_password');
         Route::put('/update', [SettingController::class, 'update'])->name('update');
+    });
+
+    Route::group([
+        'prefix' => 'artisan',
+        'as'    => 'artisan.',
+        'name'  => 'artisan.'
+    ], function () {
+        Route::get('/', [ArtisanController::class, 'index'])->name('index');
+        Route::post('/command/{action}', [ArtisanController::class, 'command'])->name('command');
     });
 });

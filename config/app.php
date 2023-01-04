@@ -21,7 +21,7 @@ return [
     |
     |
     */
-    'api'  => 'http://localhost/user/public/admin',
+    'api'  => env('APP_URL').'/admin',
     /*
     |--------------------------------------------------------------------------
     | Application Environment

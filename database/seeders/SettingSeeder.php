@@ -18,10 +18,10 @@ class SettingSeeder extends Seeder
             'title' => 'Haweb.vn',
             'description' => 'Haweb.vn',
             'keyword' => 'Haweb.vn',
-            'page_contract' => 2,
-            'page_customer' => 2,
-            'page_design' => 2,
-            'page_domain' => 2
+            'page_contract' => 10,
+            'page_customer' => 10,
+            'page_design' => 10,
+            'page_domain' => 10
         ];
         Settings::create($setting);
     }
